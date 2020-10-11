@@ -34,7 +34,10 @@ def index(request):
 
 def doctor(request, doctor_id):
     doctor = Doctor.objects.get(pk=doctor_id)
-    context = {'doctor':doctor}
+    educations = Education.objects.all().filter(doctor_id = doctor_id)
+    context = {'doctor':doctor,
+                'page_title': doctor.name,
+                'educations': educations}
     return render(request,'doctor.html',context)
 
 def search(request, keyword):

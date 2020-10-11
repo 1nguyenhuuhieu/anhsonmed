@@ -3,41 +3,26 @@
 
  {% block content %}
 {% include 'home/search.html' %}
+<div class="bg-jumbotron " style="height: 30px;"></div>
+
 {% include 'home/topdoctor.html' %}
+
+
+<div class="bg-jumbotron " style="height: 30px;"></div>
+
 
 
 
  
 {% include 'home/topdepartment.html' %}
+<div class="bg-jumbotron " style="height: 30px;"></div>
 
-<section class="px-3 my-5">
-  
-    <h5>Hỏi bác sĩ</h5>
-    <hr>
+
+
+
+{% include 'home/asks.html' %}
+
  
-
-
-
-  <ul class="list-group  borderradius20 shadow-sm">
-    <a href="#" class="list-group-item list-group-item-action">đau đầu, khó thở</a>
-    <a href="#" class="list-group-item list-group-item-action">đau bụng dữ dội</a>
-    <a href="#" class="list-group-item list-group-item-action">đau lưng</a>
-    <a href="#" class="list-group-item list-group-item-action">mắt mờ nhìn không rõ</a>
-    <a href="#" class="list-group-item list-group-item-action">mất ngủ kéo dài</a>
-    <a href="#" class="list-group-item list-group-item-action">giảm cân bất thường</a>
-  </ul>
-
-
-  <div class="text-center mt-4">
-      <a href="#"  class="btn btn-outline-dark w-50"> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
-    </div>
-   
-
-
-
-   
-
-</section>
 
 
 {% endblock %}
