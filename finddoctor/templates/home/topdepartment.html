@@ -1,0 +1,45 @@
+
+{% load static %}
+
+<section class=" mt-5 ">
+  
+
+    <div class="container">
+  
+        <h5>Các chuyên khoa</h5>
+        <hr>
+   
+      <div class="row no-gutters text-center">
+          
+
+        {% for department in top_departments_list %}
+  
+  <div class="col-6 p-2 ">
+          
+    <div class="card  shadow-sm borderradius10 " >
+    <img src="/media/{{ department.avatar }}" class="card-img-top  bordertopradius10" alt="...">
+    <div class="card-body p-0 py-2">
+      <p class="card-text ">{{ department.name }}</p>
+  
+    </div>
+  </div>
+  
+  </div>
+
+  {% endfor %}
+  
+  
+ 
+
+      </div>
+
+
+      <div class="text-center mt-4">
+        <a href="#"  class="btn btn-outline-dark w-50"> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
+      </div>
+ 
+    </div>
+  
+
+  </section>
+  
