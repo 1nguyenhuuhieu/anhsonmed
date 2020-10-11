@@ -4,48 +4,149 @@
 {% load static %}
 
 
-<div class="container">
+<div class="container pt-4">
 
-  <div class="text-center py-4  border shadow-sm mt-4 borderradius15  px-4 ">
-  <img src="/media/{{ doctor.avatar }}" alt="" class="rounded-circle img-fluid w-75 border shadow">
+  <div class="text-center">
+    <img src="/media/{{ doctor.avatar }}" alt="" class="rounded-circle img-fluid w-75 border shadow" style="max-width: 300px;">
 
-  <h5 class="mt-4">{{doctor.name}}
-    <br>
-    <small class="text-muted"> {{ doctor.highlight }}</small>
-
-  <br>  <small class="text-warning">
+    <h5 class="mt-4">{{doctor.name}}
+      <br>
+      <small class="text-muted"> {{ doctor.highlight }}</small>
+      <hr class="w-50">
+  <small class="text-warning">
+    
   
+      <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i> <a href=# class="text-muted">(Xem 28 đánh giá)</a>
 
-    <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i>
-    </small>
+     
 
-  </h5>
+      </small>
+  
+    </h5>
 
 
-  <div class="d-flex justify-content-between pt-3 pb-1 ">
-    <button class="btn btn-success"><i class="far fa-calendar-check mr-2"></i>Đặt lịch khám</button>
-
-    <div>
-      <button class="btn btn-light bg-jumbotron border-0 mr-1"><i class="fas fa-phone"></i></button>
-      <button class="btn btn-light bg-jumbotron border-0 "><i class="fas fa-comment-medical "></i></button>
+  
+    <div class="d-flex justify-content-between pt-3 pb-1 ">
+      <button class="btn btn-success"><i class="far fa-calendar-check mr-2"></i>Đặt lịch khám</button>
+  
+      <div>
+        <button class="btn btn-light bg-jumbotron border-0 mr-2"><i class="fas fa-phone"></i></button>
+        <button class="btn btn-light bg-jumbotron border-0 "><i class="fas fa-comment-medical "></i></button>
+      </div>
+     
     </div>
-   
+
   </div>
+
+
 
   <hr>
 
-  <div class="text-left">
+  <div class="row mb-2">
+    <div class="col-1">
+      <i class="fas fa-stethoscope"></i></div>
+    <div class="col-11">Phẫu thuật nội soi
+    </div>
+  </div>
+
+
+  <div class="row mb-2 ">
+    <div class="col-1">
+      <i class="fas fa-clinic-medical"></i></div>
+    <div class="col-11">Trưởng Khoa tại <a href="#" >Khoa Ngoại</a>
+    </div>
+  </div>
 
   {% for education in educations %}
-<p class="text-muted">
-  <i class="fas fa-graduation-cap mr-2"></i> {{ education.title }} tại <a href="/university/{{ education.certified_by}}" class="text-dark">{{ education.certified_by}}</a>
-</p>
+
+  <div class="row mb-2">
+    <div class="col-1">  <i class="fas fa-graduation-cap"></i></div>
+    <div class="col-11">{{ education.title|title }} tại <a href="/university/{{ education.certified_by}}" >{{ education.certified_by|title }}</a> vào năm {{ education.certified_date.year}}
+    </div>
+  </div>
+
 
   {% endfor %}
+<hr>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal">
+  Gửi đánh giá của bạn
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
+  <hr>
+
+  <div class="row no-gutters">
+    <div class="col-2 pr-1">
+      <img src="/media/{{ doctor.avatar }}" class="img-fluid rounded-circle" alt="">
+    </div>
+    <div class="col-10 pl-2">
+      <p>Nguyễn Văn Nam  
+        <br>
+        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ Nguyễn Văn Mạnh</small>
+        </p>
+
+        <div class="d-flex justify-content-between">
+          <small class="text-warning">
+            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i>
+          </small>
+          <small class="text-muted">Đánh giá ngày 20/9/2020</small> 
+        </div>
+     
+
+
+  <br>
+    
+    <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+
+
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+      <div>
+    <i class="fas fa-reply mr-2"></i>Trả lời
+
+      </div>
+      <div>
+        <i class="fas fa-heart text-danger"></i> 14
+
+        <i class="fas fa-heart-broken"></i>
+      </div>
+    </div>
+
+
+  
+    </div>
   </div>
+
+
+
+
+
+
 
 
 </div>
