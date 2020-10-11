@@ -71,25 +71,116 @@
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#exampleModal">
-  Gửi đánh giá của bạn
+  <i class="fas fa-pen-alt mr-2 "></i>Viết đánh giá
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal  fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-pen-alt mr-2 "></i>Viết đánh giá</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        
+
+        <div class="card border  shadow-sm  borderradius15 py-0 mb-3 mt-4" >
+          <div class="row no-gutters  py-3">
+            <div class="col-4 col-md-1 d-flex  align-items-center px-2 ">
+             
+              <img src="/media/{{ doctor.avatar}}" class="card-img rounded-circle" alt=" Nguyễn Hữu Hiếu">
+            </div>
+            <div class="col-8  col-md-11 ">
+              <div class="card-body py-0  pl-1 pr-2  ">
+         
+                <h5 class="card-title m-0">{{ doctor.name }}
+                 </h5>
+                 <small class="text-muted"><i class="fas fa-graduation-cap mr-1"></i>
+                  {% for i in top_doctors_education %}
+    
+                 {% if i.doctor_id == doctor.id %}
+    
+                 {{ i.title }}
+                 {% endif %}
+    
+    
+    
+    
+                  {% endfor %}
+                </small>
+                 
+                 
+    
+                 <hr class=" mt-2 mb-1 ">
+             
+    <span class="text-muted "> <i class="far fa-star"></i>
+    
+      {{ doctor.highlight }}
+    
+    
+      
+      </span>
+            </div>
+            </div>
+    
+            
+          </div>
+    
+        </div>
+<div class="text-center">
+  <p class="">Đánh giá của bạn</p>
+
+  <!-- starvote -->
+  <form id="voting" class="text-warning">	
+    <input type="radio" name="points" value="1" id="p-1" />
+    <label for="p-1"><i class="fa fa-star-o fa-2x"></i></label>
+    
+    <input type="radio" name="points" value="2" id="p-2" />
+    <label for="p-2"><i class="fa fa-star-o fa-2x"></i></label>
+    
+    <input type="radio" name="points" value="3" id="p-3" selected />
+    <label for="p-3"><i class="fa fa-star-o fa-2x"></i></label>
+    
+    <input type="radio" name="points" value="4" id="p-4" />
+    <label for="p-4"><i class="fa fa-star-o fa-2x"></i></label>
+    
+    <input type="radio" name="points" value="5" id="p-5" />
+    <label for="p-5"><i class="fa fa-star-o fa-2x"></i></label>
+  </form>
+
+
+  <script>
+    $('#voting input[name=points]').change(function() {
+	console.log($(this).parent().find('label'));
+	$(this).parent().children('label').each(function(key, val) {
+		console.log(val,$(val));
+		$(val).find('i').removeClass('fa-star').addClass('fa-star-o');
+	});
+	$(this).children('label i').removeClass('fa-star').addClass('fa-star-o');
+	$(this).find('+ label i').removeClass('fa-star-o').addClass('fa-star');
+	$(this).prevAll().find('+ label i').removeClass('fa-star-o').addClass('fa-star');
+});
+  </script>
+  <!-- starvote -->
+<hr>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Viết nhận xét dành cho bác sĩ</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+</div>
+
+        
+
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+        <button type="button" class="btn btn-success w-50"><i class="fas fa-paper-plane mr-2"></i>Gửi đánh giá</button>
       </div>
     </div>
   </div>
@@ -98,6 +189,72 @@
 
   <hr>
 
+  <div class="row ">
+    <div class="col-5 border-right text-center">
+      <h1 class="m-0">4.5</h1>
+      <span class="text-warning" style="font-size: 10px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star"></i></span>
+     <br> <span class="text-muted" >12 đánh giá</span>
+    </div>
+    <div class="col-7 ">
+
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-3"></i> <span class="text-dark"> 10 </span></p>  
+      
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      
+      
+
+
+      
+  
+  </div>
+</div>
+
+  <hr>
+
+  <!-- comment -->
+  <div class="row no-gutters">
+    <div class="col-2 pr-1">
+      <img src="/media/{{ doctor.avatar }}" class="img-fluid rounded-circle" alt="">
+    </div>
+    <div class="col-10 pl-2">
+      <p>Nguyễn Văn Nam  
+        <br>
+        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ Nguyễn Văn Mạnh</small>
+        </p>
+
+        <div class="d-flex justify-content-between">
+          <small class="text-warning">
+            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i>
+          </small>
+          <small class="text-muted">Đăng ngày 20/9/2020</small> 
+        </div>
+     
+
+<br>
+  <h5>Cực kì hài lòng</h5>
+    
+    <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+
+
+
+  
+
+  
+    </div>
+  </div>
+
+  <!-- end comment -->
+
+
+  <hr>
+
+  <!-- comment -->
   <div class="row no-gutters">
     <div class="col-2 pr-1">
       <img src="/media/{{ doctor.avatar }}" class="img-fluid rounded-circle" alt="">
@@ -125,22 +282,16 @@
 
     <hr>
 
-    <div class="d-flex justify-content-between">
-      <div>
     <i class="fas fa-reply mr-2"></i>Trả lời
 
-      </div>
-      <div>
-        <i class="fas fa-heart text-danger"></i> 14
-
-        <i class="fas fa-heart-broken"></i>
-      </div>
-    </div>
-
+  
 
   
     </div>
   </div>
+
+  <!-- end comment -->
+
 
 
 

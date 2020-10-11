@@ -156,3 +156,7 @@ border-top-right-radius: 10px;
 .bg-jumbotron {
   background-color: #e9ecef;
 }
+
+#voting input[name="points"] {
+	display: none;
+}
