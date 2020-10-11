@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '=!_klm$c!(43-z-i=)0j=(4rl*ds05bagtisu08@&x*y=mm(ws'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com']
 
 
 # Application definition
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'finddoctor',
 ]
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,3 +131,7 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
+
+
+WHITENOISE_USE_FINDERS = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
