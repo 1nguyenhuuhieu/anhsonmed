@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
 from .models import Doctor,Department,Education
 from itertools import chain
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
@@ -58,4 +60,15 @@ def search(request, keyword):
         return render(request,'searchresult.html', context)
 
 def test(request):
-    return render(request, 'test.html')
+    test = request.POST.get('test')
+    print(test)
+    user = authenticate(request, username="test222222", password="matkhau123")
+    if user is not None:
+        return HttpResponse("login thanh cong")
+    return render(request, 'test.html',context={'test':test})
+
+
+
+def loginfinddoctor(request):
+    return render(request, 'login.html')
+   

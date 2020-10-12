@@ -1,9 +1,11 @@
-{% extends 'base.html' %}
 
-{% block content %}
+<form method="POST">
 
-<h4 class="text-center"> Welcome {{ user.username }} </h4>
+    {% csrf_token %}
+    
+<input type="text" name="test">
 
 
+</form>
 
-{% endblock %}
+<h1>{{ test }}</h1>
