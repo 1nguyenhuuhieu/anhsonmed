@@ -16,7 +16,7 @@ urlpatterns = [
     path('login/',views.loginfinddoctor, name='login'),
     path('register/',views.register, name='register'),
     path('bookappointments/',views.bookappointments, name='bookappointments'),
-    path('bookappointment/<int:doctor_id>',views.bookappointment, name='bookappointment'),
+    path('bookappointment/<int:doctor_id>/',views.bookappointment, name='bookappointment'),
 
 
      

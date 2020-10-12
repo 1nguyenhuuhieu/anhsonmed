@@ -83,4 +83,4 @@ def bookappointments(request):
     context = {
         'page_title': 'Đăng ký khám'
     }
-    return render(request, 'bookappointment.html', context)
+    return render(request, 'bookappointments.html', context)
