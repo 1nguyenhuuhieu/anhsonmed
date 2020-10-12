@@ -76,4 +76,11 @@ def loginfinddoctor(request):
 
 def register(request):
     return render(request, 'register.html')
-   
+
+def bookappointment(request, doctor_id):
+    return render(request, 'bookappointment.html')
+def bookappointments(request):
+    context = {
+        'page_title': 'Đăng ký khám'
+    }
+    return render(request, 'bookappointment.html', context)

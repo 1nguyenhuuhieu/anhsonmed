@@ -14,7 +14,10 @@ urlpatterns = [
     path('doctor/<int:doctor_id>', views.doctor ,name='doctor'),
     path('search/<str:keyword>', views.search, name='search'),
     path('login/',views.loginfinddoctor, name='login'),
-    path('register/',views.register, name='register')
+    path('register/',views.register, name='register'),
+    path('bookappointments/',views.bookappointments, name='bookappointments'),
+    path('bookappointment/<int:doctor_id>',views.bookappointment, name='bookappointment'),
+
 
      
 ]
