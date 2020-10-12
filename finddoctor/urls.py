@@ -13,7 +13,8 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('doctor/<int:doctor_id>', views.doctor ,name='doctor'),
     path('search/<str:keyword>', views.search, name='search'),
-    path('login/',views.loginfinddoctor, name='login')
+    path('login/',views.loginfinddoctor, name='login'),
+    path('register/',views.register, name='register')
 
      
 ]

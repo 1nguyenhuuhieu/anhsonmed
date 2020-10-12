@@ -72,3 +72,8 @@ def test(request):
 def loginfinddoctor(request):
     return render(request, 'login.html')
    
+
+
+def register(request):
+    return render(request, 'register.html')
+   

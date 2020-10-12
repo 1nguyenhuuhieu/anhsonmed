@@ -92,19 +92,8 @@ body {
         <a href="/">
   <img class="mb-2" src="{% static 'finddoctor/imgs/logo.png' %}" alt="" width="100">
 </a>
-  <h5 class=" mb-3 font-weight-light">Đăng nhập vào  <span class="font-weight-normal">Tra Cứu <span class="text-success">Bác Sĩ</span></span> </h5>
-  <label for="text" class="sr-only">Số điện thoại</label>
-  
-  
-  <input type="text" name="inputusername" id="username2" class="form-control shadow-sm" placeholder="Số điện thoại" required autofocus>
+  <h5 class=" mb-3 font-weight-light">Đăng ký tài khoản  <span class="font-weight-normal">Tra Cứu <span class="text-success">Bác Sĩ</span></span> </h5>
 
-
-
-  <label for="inputPassword" class="sr-only">Mật khẩu</label>
-  <input type="password" name="inputpassword" id="inputPassword" class="form-control shadow-sm" placeholder="Mật khẩu" required>
-  <p class="text-right"><a href="#">Quên mật khẩu?</a></p>
-
-  <button class="btn btn-success btn-block shadow-sm" type="submit">Đăng nhập</button>
 
   <div class=" mt-3 py-3 ">
     <p class="">Đăng nhập sử dụng </p>
@@ -113,9 +102,21 @@ body {
     <button class="btn btn-danger w-100 mb-2"><i class="fab fa-google mr-2"></i></i>google</button>
 </div>
 
+hoặc tạo tài khoản
+<p></p>
+  
+
+  <div class="form-group text-left">
+    <label for="exampleInputEmail1">Số điện thoại</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" >
+  </div>
+
+  <button class="btn btn-success btn-block shadow-sm" type="submit">Đăng ký</button>
+
+
 
   <div class="border rounded mt-4 py-3 shadow-sm ">
-    <p class="m-0">Bạn chưa có tài khoản? <a href="/register/">Tạo tài khoản.</a></p>
+    <p class="m-0">Bạn đã có tài khoản? <a href="/login/">Đăng nhập.</a></p>
 </div>
 
 
