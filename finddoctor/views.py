@@ -78,9 +78,11 @@ def register(request):
     return render(request, 'register.html')
 
 def bookappointment(request, doctor_id):
-    return render(request, 'bookappointment.html')
-def bookappointments(request):
+    doctor = Doctor.objects.get(pk=doctor_id)
+    context = {'doctor':doctor}
+    return render(request, 'bookappointment.html',context)
+def bookappointmenthome(request):
     context = {
         'page_title': 'Đăng ký khám'
     }
-    return render(request, 'bookappointments.html', context)
+    return render(request, 'bookappointmenthome.html', context)
