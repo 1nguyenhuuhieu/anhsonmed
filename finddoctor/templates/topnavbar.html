@@ -40,7 +40,14 @@
           <div class="btn-group">
 
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+              {% if user.userprofile.avatar %}
               <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 40px;">
+              {% else %}
+              <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle" style="width: 40px;">
+
+
+              {% endif %}
 
 
             </a>
