@@ -14,6 +14,12 @@ def index(request):
     user_id = request.user.id
     if user_id:
         user_avatar = UserProfile.objects.get(pk=user_id)
+        if user_avatar.avatar :
+            context = {'user_avatar': user_avatar.avatar}
+
+        else:
+            print('khong co anh')
+            context = {'user_avatar': '/imgs/noavatar.jpg'}
     else:
         context = {}
     

@@ -29,12 +29,30 @@
   
 
 
-          {% if user_avatar %}
+          {% if request.user.is_authenticated %}
           <div class="navbar-text">
 
-           <img src="/media/{{ user_avatar }}" alt="" class="img-fluid rounded-circle" style="width: 40px;">
         
+         
+
+
+
+          <div class="btn-group">
+
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 40px;">
+
+
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button">Action</button>
+              <button class="dropdown-item" type="button">Another action</button>
+              <a href='/logout' class="dropdown-item"  >Đăng xuất</a>
+            </div>
           </div>
+
+        </div>
+
  
           {% else %}
             <a href="{% url 'login' %}" class="btn btn-outline-success btn-sm">Đăng nhập</a>

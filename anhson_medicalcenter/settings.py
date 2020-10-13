@@ -128,3 +128,6 @@ STATICFILES_DIRS = ( os.path.join('static'), )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
+
+
+AUTH_PROFILE_MODULE = "finddoctor.UserProfile"
