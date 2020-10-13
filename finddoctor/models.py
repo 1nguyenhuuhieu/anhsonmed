@@ -87,3 +87,8 @@ class Education(models.Model):
 
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to = 'imgs/avatars/',null=True, blank=True )
+    def __str__(self):
+        return  str(self.user)

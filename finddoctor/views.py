@@ -3,13 +3,23 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education
+from .models import Doctor,Department,Education, UserProfile
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
 def index(request):
+  
+    user_id = request.user.id
+    if user_id:
+        user_avatar = UserProfile.objects.get(pk=user_id)
+
+        context = {'user_avatar': user_avatar.avatar}
+    else:
+        context = {}
+    
+
     doctors = Doctor.objects.all()
     departments = Department.objects.all()
     doctor_names = []
@@ -26,13 +36,14 @@ def index(request):
         top_doctors_list_id.append(i.id)
     top_doctors_education = Education.objects.all().filter(doctor_id__in=top_doctors_list_id).filter(main=True)
     
-    context = {'top_doctors_list': top_doctors_list,
+    context.update({'top_doctors_list': top_doctors_list,
                 'doctor_names':doctor_names,
                 'top_doctors_education':  top_doctors_education,
                 'page_title': "Home",
                 'top_departments_list':  top_departments_list
-    }
+    })
     return render(request,'index.html', context)
+
 
 def doctor(request, doctor_id):
     doctor = Doctor.objects.get(pk=doctor_id)
