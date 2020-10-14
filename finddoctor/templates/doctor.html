@@ -27,7 +27,49 @@
 
   
     <div class="d-flex justify-content-between pt-3 pb-1 ">
-     <a href="{% url 'bookappointment' doctor.id %}" class="btn btn-success"><i class="far fa-calendar-check mr-2"></i>Đặt lịch khám</a> 
+
+
+
+      {% if request.user.is_authenticated %}
+  
+      <a href="{% url 'bookappointment' doctor.id %}" class="btn btn-success"><i class="far fa-calendar-check mr-2"></i>Đặt lịch khám</a> 
+
+      {% else %}
+
+      <!-- Button trigger modal -->
+<button type="button " class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<i class="far fa-calendar-check mr-2"></i> Đăng Ký Khám
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content ">
+<div class="modal-header bg-danger">
+  <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  Bạn cần đăng nhập để đăng ký khám
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+  <a href="{% url 'login' %}"  class="btn btn-outline-dark">Đăng Nhập</a>
+  <a href="{% url 'login' %}"  class="btn btn-success">Đăng Ký</a>
+</div>
+</div>
+</div>
+</div>
+
+      {% endif %}
+
+
+
+     
+
+
   
       <div>
         <button class="btn btn-light bg-jumbotron border-0 mr-2"><i class="fas fa-phone"></i></button>
@@ -76,10 +118,10 @@
 
 {% if request.user.is_authenticated %}
 <!-- Modal -->
-<div class="modal  fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+<div class="modal  fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content  ">
+      <div class="modal-header bg-success">
         <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-pen-alt mr-2 "></i>Viết đánh giá</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -99,25 +141,11 @@
          
                 <h5 class="card-title m-0">{{ doctor.name }}
                  </h5>
-                 <small class="text-muted"><i class="fas fa-graduation-cap mr-1"></i>
-                  {% for i in top_doctors_education %}
-    
-                 {% if i.doctor_id == doctor.id %}
-    
-                 {{ i.title }}
-                 {% endif %}
-    
-    
-    
-    
-                  {% endfor %}
-                </small>
-                 
                  
     
                  <hr class=" mt-2 mb-1 ">
              
-    <span class="text-muted "> <i class="far fa-star"></i>
+    <span class="text-muted ">
     
       {{ doctor.highlight }}
     

@@ -143,3 +143,4 @@ MEDIA_URL = '/media/'
 AUTH_PROFILE_MODULE = "finddoctor.UserProfile"
 
 
+DATE_INPUT_FORMATS = ['%d-%m-%Y']

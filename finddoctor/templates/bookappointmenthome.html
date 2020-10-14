@@ -17,38 +17,38 @@
 
 
     <div class="container">
-    <h4 >  <i class="far fa-calendar-check mr-3"></i>Đăng Ký Khám</h4>
+      <h5>  <i class="far fa-calendar-check mr-3 mt-4"></i>Đăng Ký Khám tại Trung Tâm Y Tế Anh Sơn </h5>
    <hr>
      
    {% if request.user.is_authenticated %}
-   <form>
+   <form method="POST" action='{% url "bookappointmenthome" %}'>
+     {% csrf_token %}
     <div class="form-group">
       <label for="exampleInputEmail1">Họ và tên người đến khám</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value = '{{ user.userprofile.name }}'>
+      <input name= 'ordername' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value = '{{ user.userprofile.name }}'>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Điện thoại liên hệ</label>
-      <input type="number" class="form-control" id="exampleInputPassword1" value="{{ user.userprofile.phone }}">
+      <input name='orderphone' type="number" class="form-control" id="exampleInputPassword1" value="{{ user.userprofile.phone }}">
       
     </div>
 
     <div class="form-group">
         <label>Chọn ngày khám </label>
                 <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
-                     <input class="form-control rounded" readonly="" type="text"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+                     <input class="form-control rounded bg-white" readonly="" type="text" name='date'> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
                 </div>
     
     
     </div>
 
-    
 
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline1">Buổi sáng</label>
+        <input type="radio" id="customRadioInline1" name="time" class="custom-control-input" checked="checked" value="sáng">
+        <label class="custom-control-label" for="customRadioInline1"  >Buổi sáng</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+        <input type="radio" id="customRadioInline2" name="time" class="custom-control-input" value="chiều">
         <label class="custom-control-label" for="customRadioInline2">Buổi chiều</label>
       </div>
 
@@ -56,7 +56,7 @@
         
       <div class="form-group mt-4">
         <label for="exampleFormControlTextarea1" class="font-weight-bold">Mô tả triệu chứng hoặc lí do muốn khám</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
       </div>
       
 

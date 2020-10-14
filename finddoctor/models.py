@@ -94,3 +94,14 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to = 'imgs/avatars/',null=True, blank=True )
     def __str__(self):
         return  str(self.user)
+
+class BookApartment(models.Model):
+    ordername = models.CharField(max_length=200,null=True, blank=True)
+    orderphone = models.IntegerField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500,null=True, blank=True)
+    time = models.CharField(max_length=20,null=True, blank=True)
+    date = models.CharField(max_length=200,null=True, blank=True)
+   
+    def __str__(self):
+        return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)

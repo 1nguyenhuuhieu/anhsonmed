@@ -1,12 +1,17 @@
+import datetime
+from django.utils import timezone
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile
+from .models import Doctor,Department,Education, UserProfile, BookApartment
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
+
+from django.contrib.auth.models import User
 # Create your views here.
 
 def index(request):
@@ -109,10 +114,35 @@ def register(request):
 
 def bookappointment(request, doctor_id):
     doctor = Doctor.objects.get(pk=doctor_id)
-    context = {'doctor':doctor}
+    context = {'doctor':doctor,'page_navbar': 'green','page_title': doctor.name }
     return render(request, 'bookappointment.html',context)
 def bookappointmenthome(request):
-    context = {
-        'page_title': 'Đăng ký khám'
-    }
+    context = {}
+    if request.method == 'POST':
+        ordername = request.POST.get('ordername')
+        orderphone = request.POST.get('orderphone')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        description = request.POST.get('description')
+        user = User.objects.get(pk = request.user.id)
+        
+        newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user)
+        newbook.save()
+        print(ordername)
+        print('-------------------')
+        return redirect('bookappointmentsuccess')
+    
+
+ 
+    context.update({
+        'page_title': 'Đăng ký khám' ,'page_navbar': 'green'
+    })
     return render(request, 'bookappointmenthome.html', context)
+
+def bookappointmentsuccess(request):
+    orderinfo = BookApartment.objects.latest('id')
+    context = {
+        'orderinfo': orderinfo
+
+    }
+    return render(request, 'bookappointmentsuccess.html', context)
