@@ -4,33 +4,82 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm py-0 sticky-top">
   <a class="navbar-brand " href="/">
-    <i class="fas fa-arrow-left"></i> 
+    <i class="fas fa-arrow-left mr-2"></i> Quay lại 
   </a>
 
+
+
+  
+
+  {% if request.user.is_authenticated %}
+  <div class="navbar-text  px-0 py-2">
+
+
+ 
+
+
+
+  <div class="btn-group">
+
+    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+      {% if user.userprofile.avatar %}
+      <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px;">
+      {% else %}
+      <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle shadow-sm" style="width: 35px;">
+
+
+      {% endif %}
+
+
+    </a>
+    <div class="dropdown-menu dropdown-menu-right ">
+      <button class="dropdown-item" type="button">Action</button>
+      <button class="dropdown-item" type="button">Another action</button>
+      <a href='{% url "logout" %}' class="dropdown-item text-dark" >Đăng xuất</a>
+    </div>
+  </div>
+
+</div>
+
+
+  {% else %}
   <button class="btn btn-outline-light py-1 "><i class="fas fa-user-nurse mr-3"></i>Hỗ trợ</button>
+
+
+
+  {% endif %}
+
+
+
+
+  
+
+  <!-- <button class="btn btn-outline-light py-1 "><i class="fas fa-user-nurse mr-3"></i>Hỗ trợ</button> -->
 </nav>
 
 {% else %}
-      <nav class="navbar  navbar-light bg-light shadow-sm py-0 sticky-top d-flex justify-content-between">
+      <nav class="navbar  navbar-light bg-light shadow-sm  py-0 sticky-top d-flex justify-content-between">
 
 
-          <button class="navbar-toggler border-0 p-0 m-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
+          <button class="navbar-toggler border-0 p-0 m-0 " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <i class="fas fa-bars"></i> -->
+            <span class="navbar-toggler-icon m-0 p-0"></span>
           </button>
 
 
-          <a class="navbar-brand m-0" href="/">
-            <img src="{% static 'finddoctor/imgs/logo.png' %}" class="navbarlogo rounded-circle    border" alt="">
-            <small>anhson<span class="text-success">med</span>.com
+          <a class=" m-0 p-0" href="/">
+            <img src="{% static 'finddoctor/imgs/logotext.png' %}" class="navbarlogo    m-0 p-0  " alt="">
+            <!-- <small>anhson<span class="text-success">med</span>.com  </small> -->
              
-            </small>
+           
         
         </a>
   
 
 
           {% if request.user.is_authenticated %}
-          <div class="navbar-text">
+          <div class="navbar-text  px-0 py-2">
 
         
          
@@ -42,9 +91,9 @@
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
               {% if user.userprofile.avatar %}
-              <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 40px;">
+              <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px;">
               {% else %}
-              <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle" style="width: 40px;">
+              <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle shadow-sm" style="width: 35px;">
 
 
               {% endif %}
@@ -62,7 +111,7 @@
 
  
           {% else %}
-            <a href="{% url 'login' %}" class="btn btn-outline-success btn-sm">Đăng nhập</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-success btn-sm my-2">Đăng nhập</a>
    
 
           {% endif %}

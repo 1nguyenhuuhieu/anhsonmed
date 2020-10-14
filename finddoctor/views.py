@@ -85,19 +85,22 @@ def test(request):
 
 
 def loginfinddoctor(request):
+
     if request.method == 'POST':
+  
         inputusername = request.POST.get('username')
         inputpassword = request.POST.get('password')
-        print(inputusername)
-        print(inputpassword)
         user = authenticate(username = inputusername, password = inputpassword)
         if user is not None:
             login(request, user)
-
             return redirect('home')
         else:
             return HttpResponse('unsucess')
     return render(request, 'login.html')
+
+def logoutfinddoctor(request):
+    logout(request)
+    return redirect('home')
    
 
 
