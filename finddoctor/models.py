@@ -102,6 +102,12 @@ class BookApartment(models.Model):
     description = models.TextField(max_length=500,null=True, blank=True)
     time = models.CharField(max_length=20,null=True, blank=True)
     date = models.CharField(max_length=200,null=True, blank=True)
+    dotor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
    
     def __str__(self):
         return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)
+
+class ReviewDoctor(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stars = models.IntegerField(null=True, blank=True)
+    description = models.TextField(max_length=500,null=True, blank=True)

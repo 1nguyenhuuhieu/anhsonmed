@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment
+from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -70,7 +70,7 @@ def search(request, keyword):
     if cout_result == 1:
         if doctors.count()==1:
             doctors = Doctor.objects.get(name=keyword)
-            context = {'doctor': doctors}
+            context = {'doctor': doctors, 'page_title': doctors.name }
             return render(request,'doctor.html', context)
         if department.count() == 1:
             return HttpResponse('sdfg')
