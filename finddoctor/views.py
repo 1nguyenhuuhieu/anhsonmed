@@ -56,8 +56,11 @@ def index(request):
 
 def doctor(request, doctor_id):
     if request.method == 'POST':
+        points = request.POST.get('points')
+        comment = request.POST.get('comment')
+        print(points + comment)
         print('-----')
-        print(request.POST.get('points'))
+        return redirect('doctor', doctor_id)
     doctor = Doctor.objects.get(pk=doctor_id)
     educations = Education.objects.all().filter(doctor_id = doctor_id)
     context = { 'doctor':doctor,

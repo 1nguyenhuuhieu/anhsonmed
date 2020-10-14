@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import random
 
 # Create your models here.
 
@@ -102,7 +103,16 @@ class BookApartment(models.Model):
     description = models.TextField(max_length=500,null=True, blank=True)
     time = models.CharField(max_length=20,null=True, blank=True)
     date = models.CharField(max_length=200,null=True, blank=True)
-    dotor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
+   
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
+    rannumber = random.randint(100000,999999)
+
+    vertify_code = models.IntegerField(default=rannumber, null=True, blank=True)
+    choicelist = [
+        ('ĐC', 'Đang Chờ'),
+        ('ĐX', 'Đã xong')
+    ]
+    status = models.CharField(max_length=50, choices=choicelist,null=True, blank=True)
    
     def __str__(self):
         return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)
@@ -111,3 +121,9 @@ class ReviewDoctor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stars = models.IntegerField(null=True, blank=True)
     description = models.TextField(max_length=500,null=True, blank=True)
+
+class Apartments(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.OneToOneField(BookApartment, on_delete=models.CASCADE)
+    rannumber = random.randint(100000,999999)
+    vertify_code = models.IntegerField(default = rannumber, null=True, blank=True, unique=True)

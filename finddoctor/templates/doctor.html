@@ -159,12 +159,12 @@
           </div>
     
         </div>
-<div class="text-center">
-  <p class="">Đánh giá của bạn</p>
+  <p class="text-center">Đánh giá của bạn</p>
 
   <!-- starvote -->
-  <form id="voting" class="text-warning" method="POST">	
+  <form id="voting" class="" method="POST">	
     {% csrf_token %}
+    <div class="text-warning text-center">
     <input type="radio" name="points" value="1" id="p-1" />
     <label for="p-1"><i class="fa fa-star-o fa-2x"></i></label>
     
@@ -179,7 +179,7 @@
     
     <input type="radio" name="points" value="5" id="p-5" />
     <label for="p-5"><i class="fa fa-star-o fa-2x"></i></label>
-  </form>
+  </div> 
 
 
   <script>
@@ -197,24 +197,22 @@
   <!-- starvote -->
 <hr>
 
-    <div class="form-group">
       <label for="exampleFormControlTextarea1">Viết nhận xét dành cho bác sĩ</label>
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='comment'></textarea>
-    </div>
-
+<div class="text-right">
+  <button type="button" class="btn btn-outline-dark mt-4 mr-2" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+  
+  <button type="submit" class="btn btn-success  mt-4"><i class="fas fa-paper-plane mr-2"></i>Gửi đánh giá</button>
 </div>
+    
+    </form>
+
 
         
 
 
       </div>
-      <div class="modal-footer">
-       
-        <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
-  
-        <button type="submit" class="btn btn-success w-50"><i class="fas fa-paper-plane mr-2"></i>Gửi đánh giá</button>
-   
-      </div>
+
     </div>
   </div>
 </div>
