@@ -55,9 +55,12 @@ def index(request):
 
 
 def doctor(request, doctor_id):
+    if request.method == 'POST':
+        print('-----')
+        print(request.POST.get('points'))
     doctor = Doctor.objects.get(pk=doctor_id)
     educations = Education.objects.all().filter(doctor_id = doctor_id)
-    context = {'doctor':doctor,
+    context = { 'doctor':doctor,
                 'page_title': doctor.name,
                 'educations': educations}
     return render(request,'doctor.html',context)
