@@ -17,10 +17,11 @@
 
 
     <div class="container">
+      {% if request.user.is_authenticated %}
     <h4 >  <i class="far fa-calendar-check mr-3"></i>Đăng Ký Khám</h4>
    <hr>
      
-   {% if request.user.is_authenticated %}
+  
    <form>
     <div class="form-group">
       <label for="exampleInputEmail1">Họ và tên người đến khám</label>
