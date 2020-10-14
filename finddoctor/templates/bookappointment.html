@@ -5,7 +5,7 @@
       
 {% load static %}
 
-<h1>fdgf</h1>
+
 <div class="p-2">
   
 <img src="{% static 'finddoctor/imgs/bg_doctor.png' %}" alt="" class="img-fluid borderradius15 shadow-sm">
@@ -17,71 +17,60 @@
 
 
     <div class="container">
-     
-
-
-  
-  
-  
     <h4 >  <i class="far fa-calendar-check mr-3"></i>Đăng Ký Khám</h4>
    <hr>
      
+   {% if request.user.is_authenticated %}
+   <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Họ và tên người đến khám</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value = '{{ user.userprofile.name }}'>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Điện thoại liên hệ</label>
+      <input type="number" class="form-control" id="exampleInputPassword1" value="{{ user.userprofile.phone }}">
+      
+    </div>
+
+    <div class="form-group">
+        <label>Chọn ngày khám </label>
+                <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
+                     <input class="form-control rounded" readonly="" type="text"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+                </div>
     
-  
-      <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Họ và tên</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Điện thoại</label>
-          <input type="number" class="form-control" id="exampleInputPassword1">
-          
-        </div>
+    
+    </div>
 
-        <div class="form-group">
-            <label>Chọn ngày </label>
-                    <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
-                         <input class="form-control rounded" readonly="" type="text"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
-                    </div>
-        
-        
-        </div>
+    
 
-        
-
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">Buổi sáng</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Buổi chiều</label>
-          </div>
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Buổi sáng</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Buổi chiều</label>
+      </div>
 
 <hr>
-          <p class="font-weight-bold mt-4">Bạn muốn đăng ký khám cho ai?</p>
+        
+      <div class="form-group mt-4">
+        <label for="exampleFormControlTextarea1" class="font-weight-bold">Mô tả triệu chứng hoặc lí do muốn khám</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+      
 
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline3" name="customRadioInline3" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline3">Tôi khám</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline4" name="customRadioInline3" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline4">Đăng ký cho người khác</label>
-          </div>
-     
-            
-          <div class="form-group mt-4">
-            <label for="exampleFormControlTextarea1" class="font-weight-bold">Mô tả triệu chứng hoặc lí do muốn khám</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-          
+    <button type="submit" class="btn btn-success w-100 mt-4">Đăng ký khám</button>
+  </form>
 
-        <button type="submit" class="btn btn-success w-100 mt-4">Đăng ký khám</button>
-      </form>
+ 
+   {% else %}
+
+   <h5 class="text.danger">Vui lòng đăng nhập để tiếp tục</h5>
+
+   {% endif %}
   
-     
+ 
   
       <!-- bác sĩ -->
   
