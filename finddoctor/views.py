@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor
+from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -55,18 +55,24 @@ def index(request):
 
 
 def doctor(request, doctor_id):
+
+    doctor = Doctor.objects.get(pk=doctor_id)
+    educations = Education.objects.all().filter(doctor_id = doctor_id)
+    comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
+    context = { 'doctor':doctor,
+                'page_title': doctor.name,
+                'educations': educations,
+                'comments':comments}
+    return render(request,'doctor.html',context)
+
     if request.method == 'POST':
         points = request.POST.get('points')
         comment = request.POST.get('comment')
-        print(points + comment)
-        print('-----')
+        user = User.objects.get(pk = request.user.id)
+        newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor)
+        newreview.save()
+    
         return redirect('doctor', doctor_id)
-    doctor = Doctor.objects.get(pk=doctor_id)
-    educations = Education.objects.all().filter(doctor_id = doctor_id)
-    context = { 'doctor':doctor,
-                'page_title': doctor.name,
-                'educations': educations}
-    return render(request,'doctor.html',context)
 
 def search(request, keyword):
     doctors  = Doctor.objects.all().filter(name=keyword)

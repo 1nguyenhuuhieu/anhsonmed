@@ -120,7 +120,8 @@ class BookApartment(models.Model):
 class ReviewDoctor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stars = models.IntegerField(null=True, blank=True)
-    description = models.TextField(max_length=500,null=True, blank=True)
+    comment = models.TextField(max_length=500,null=True, blank=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
 class Apartments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -270,6 +270,8 @@
   </div>
 </div>
 
+{% for comment in comments %}
+
   <hr>
 
   <!-- comment -->
@@ -306,47 +308,7 @@
 
   <!-- end comment -->
 
-
-  <hr>
-
-  <!-- comment -->
-  <div class="row no-gutters">
-    <div class="col-2 pr-1">
-      <img src="/media/{{ doctor.avatar }}" class="img-fluid rounded-circle" alt="">
-    </div>
-    <div class="col-10 pl-2">
-      <p>Nguyễn Văn Nam  
-        <br>
-        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ Nguyễn Văn Mạnh</small>
-        </p>
-
-        <div class="d-flex justify-content-between">
-          <small class="text-warning">
-            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i>
-          </small>
-          <small class="text-muted">Đánh giá ngày 20/9/2020</small> 
-        </div>
-     
-
-
-  <br>
-    
-    <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-
-
-
-    <hr>
-
-    <i class="fas fa-reply mr-2"></i>Trả lời
-
-  
-
-  
-    </div>
-  </div>
-
-  <!-- end comment -->
-
+{% endfor %}
 
 
 
