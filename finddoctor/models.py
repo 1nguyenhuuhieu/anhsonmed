@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import random
+from django.utils import timezone
 
 # Create your models here.
 
@@ -108,6 +109,7 @@ class BookApartment(models.Model):
     rannumber = random.randint(100000,999999)
 
     vertify_code = models.IntegerField(default=rannumber, null=True, blank=True)
+   
     choicelist = [
         ('ĐC', 'Đang Chờ'),
         ('ĐX', 'Đã xong')
@@ -122,6 +124,14 @@ class ReviewDoctor(models.Model):
     stars = models.IntegerField(null=True, blank=True)
     comment = models.TextField(max_length=500,null=True, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+
+    created     = models.DateTimeField(editable=False,null=True, blank=True, auto_now_add=True)
+    modified    = models.DateTimeField(null=True, blank=True)
+    verify = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.comment
 
 class Apartments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

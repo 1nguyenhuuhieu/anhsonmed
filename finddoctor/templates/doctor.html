@@ -270,33 +270,45 @@
   </div>
 </div>
 
-{% for comment in comments %}
+{% for comment in comments reversed %}
 
   <hr>
 
   <!-- comment -->
   <div class="row no-gutters">
     <div class="col-2 pr-1">
-      <img src="/media/{{ doctor.avatar }}" class="img-fluid rounded-circle" alt="">
+      <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
     </div>
     <div class="col-10 pl-2">
-      <p>Nguyễn Văn Nam  
+      <p>{{ comment.user.userprofile.name }}  
         <br>
-        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ Nguyễn Văn Mạnh</small>
+        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ {{ doctor.name }}</small>
         </p>
 
         <div class="d-flex justify-content-between">
           <small class="text-warning">
-            <i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i>
+
+       
+{% for i in '12345' %}
+{% if forloop.counter0 < comment.stars %}
+
+
+         <i class="fas fa-star mr-1"></i>
+
+         {% endif %}
+   
+         {% endfor %}
+ 
+
           </small>
-          <small class="text-muted">Đăng ngày 20/9/2020</small> 
+          <small class="text-muted">Đăng ngày {{ comment.created|date }}</small> 
         </div>
      
 
 <br>
   <h5>Cực kì hài lòng</h5>
     
-    <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+    <p>  {{ comment.comment}}</p>
 
 
 

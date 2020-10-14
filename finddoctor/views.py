@@ -55,15 +55,7 @@ def index(request):
 
 
 def doctor(request, doctor_id):
-
     doctor = Doctor.objects.get(pk=doctor_id)
-    educations = Education.objects.all().filter(doctor_id = doctor_id)
-    comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
-    context = { 'doctor':doctor,
-                'page_title': doctor.name,
-                'educations': educations,
-                'comments':comments}
-    return render(request,'doctor.html',context)
 
     if request.method == 'POST':
         points = request.POST.get('points')
@@ -73,6 +65,17 @@ def doctor(request, doctor_id):
         newreview.save()
     
         return redirect('doctor', doctor_id)
+
+    educations = Education.objects.all().filter(doctor_id = doctor_id)
+    comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
+  
+    context = { 'doctor':doctor,
+                'page_title': doctor.name,
+                'educations': educations,
+                'comments':comments,}
+    return render(request,'doctor.html',context)
+
+ 
 
 def search(request, keyword):
     doctors  = Doctor.objects.all().filter(name=keyword)
