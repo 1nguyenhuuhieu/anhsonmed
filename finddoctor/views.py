@@ -128,8 +128,9 @@ def register(request):
 
 def bookappointment(request, doctor_id):
     
-    context = {}
     doctor = Doctor.objects.get(pk=doctor_id)
+    
+    context = {'doctor': doctor,'page_title': doctor.name ,'page_navbar': 'green'}
     if request.method == 'POST':
         ordername = request.POST.get('ordername')
         orderphone = request.POST.get('orderphone')
@@ -137,30 +138,15 @@ def bookappointment(request, doctor_id):
         time = request.POST.get('time')
         description = request.POST.get('description')
         user = User.objects.get(pk = request.user.id)
-        
-        
-
-        
         newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user, doctor=doctor)
         newbook.save()
-        print('-------')
         orderinfo = BookApartment.objects.latest('id')
-        context = {
-        'orderinfo': orderinfo,
-        'doctor': doctor
-        }
+        context.update({'orderinfo': orderinfo})
 
-        print(doctor.name) 
-        print('-------')
+        return redirect('bookappointmentsuccess')
 
-        return render(request, 'bookappointmentsuccess.html', context  )
-
-
-
-
-    context.update({'doctor':doctor,'page_navbar': 'green','page_title': doctor.name })
-    return render(request, 'bookappointment.html',context)
-
+        # return render(request, 'bookappointmentsuccess.html', context  )
+    return render(request, 'bookappointment.html', context)
 
 def bookappointmenthome(request):
     context = {}
@@ -186,8 +172,10 @@ def bookappointmenthome(request):
 
 def bookappointmentsuccess(request):
     orderinfo = BookApartment.objects.latest('id')
+    doctor = orderinfo.doctor
     context = {
-        'orderinfo': orderinfo
+        'orderinfo': orderinfo,
+        'doctor': doctor
 
     }
     return render(request, 'bookappointmentsuccess.html', context)

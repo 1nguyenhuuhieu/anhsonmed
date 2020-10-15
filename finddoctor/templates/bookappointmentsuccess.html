@@ -23,14 +23,16 @@
   </div>
 </div>
 
-
+{% if doctor %}
 
 <div class="row text-left justify-content-center mb-2">
-  <div class="col-1 "><i class="fas fa-notes-medical"></i></div>
+  <div class="col-1 "><i class="fas fa-user-md"></i></div>
   <div class="col-10">
 {{ doctor.name }}
   </div>
 </div>
+
+{% endif %}
 
 
 
