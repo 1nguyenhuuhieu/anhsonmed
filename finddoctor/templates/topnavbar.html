@@ -17,45 +17,7 @@
 
   
 
-  {% if request.user.is_authenticated %}
-  <div class="navbar-text  px-0 py-2">
-
-
- 
-
-
-
-  <div class="btn-group">
-
-    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-      {% if user.userprofile.avatar %}
-      <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px;">
-      {% else %}
-      <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle shadow-sm" style="width: 35px;">
-
-
-      {% endif %}
-
-
-    </a>
-    <div class="dropdown-menu dropdown-menu-right ">
-      <button class="dropdown-item" type="button">Action</button>
-      <button class="dropdown-item" type="button">Another action</button>
-      <a href='{% url "logout" %}' class="dropdown-item text-dark" >Đăng xuất</a>
-    </div>
-  </div>
-
-</div>
-
-
-  {% else %}
-  <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm my-2">Đăng nhập</a>
-
-
-  {% endif %}
-
-
+  {% include 'usernavbar.html' %}
 
 
   
@@ -83,45 +45,7 @@
   
 
 
-          {% if request.user.is_authenticated %}
-          <div class="navbar-text  px-0 py-2">
-
-        
-         
-
-
-
-          <div class="btn-group">
-
-            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-              {% if user.userprofile.avatar %}
-              <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px;">
-              {% else %}
-              <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle shadow-sm" style="width: 35px;">
-
-
-              {% endif %}
-
-
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button">Action</button>
-              <button class="dropdown-item" type="button">Another action</button>
-              <a href='/logout' class="dropdown-item"  ><i class="fas fa-user-edit mr-2"></i>Sửa thông tin</a>
-              <a href='/logout' class="dropdown-item"  ><i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất</a>
-            </div>
-          </div>
-
-        </div>
-
- 
-          {% else %}
-            <a href="{% url 'login' %}" class="btn btn-outline-success btn-sm my-2">Đăng nhập</a>
-   
-
-          {% endif %}
-
+    {% include 'usernavbar.html' %}
 
       
    
