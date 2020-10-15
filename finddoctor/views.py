@@ -23,7 +23,6 @@ def index(request):
             context = {'user_avatar': user_avatar.avatar}
 
         else:
-            print('khong co anh')
             context = {'user_avatar': '/imgs/noavatar.jpg'}
     else:
         context = {}
@@ -128,9 +127,41 @@ def register(request):
     return render(request, 'register.html')
 
 def bookappointment(request, doctor_id):
+    
+    context = {}
     doctor = Doctor.objects.get(pk=doctor_id)
-    context = {'doctor':doctor,'page_navbar': 'green','page_title': doctor.name }
+    if request.method == 'POST':
+        ordername = request.POST.get('ordername')
+        orderphone = request.POST.get('orderphone')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        description = request.POST.get('description')
+        user = User.objects.get(pk = request.user.id)
+        
+        
+
+        
+        newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user, doctor=doctor)
+        newbook.save()
+        print('-------')
+        orderinfo = BookApartment.objects.latest('id')
+        context = {
+        'orderinfo': orderinfo,
+        'doctor': doctor
+        }
+
+        print(doctor.name) 
+        print('-------')
+
+        return render(request, 'bookappointmentsuccess.html', context  )
+
+
+
+
+    context.update({'doctor':doctor,'page_navbar': 'green','page_title': doctor.name })
     return render(request, 'bookappointment.html',context)
+
+
 def bookappointmenthome(request):
     context = {}
     if request.method == 'POST':
@@ -143,8 +174,7 @@ def bookappointmenthome(request):
         
         newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user)
         newbook.save()
-        print(ordername)
-        print('-------------------')
+
         return redirect('bookappointmentsuccess')
     
 
@@ -155,6 +185,14 @@ def bookappointmenthome(request):
     return render(request, 'bookappointmenthome.html', context)
 
 def bookappointmentsuccess(request):
+    orderinfo = BookApartment.objects.latest('id')
+    context = {
+        'orderinfo': orderinfo
+
+    }
+    return render(request, 'bookappointmentsuccess.html', context)
+
+def bookappointmentsuccesswithdoctor(request,doctor_id):
     orderinfo = BookApartment.objects.latest('id')
     context = {
         'orderinfo': orderinfo

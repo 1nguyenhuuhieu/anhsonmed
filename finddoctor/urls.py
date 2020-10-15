@@ -19,6 +19,9 @@ urlpatterns = [
     path('register/',views.register, name='register'),
     path('bookappointmenthome/',views.bookappointmenthome, name='bookappointmenthome'),
     path('bookappointmenthome/success/', views.bookappointmentsuccess, name='bookappointmentsuccess'),
+    path('bookappointmentsuccesswithdoctor/<int:doctor_id>', views.bookappointmentsuccesswithdoctor, name='bookappointmentsuccesswithdoctor'),
+    
+   
     path('bookappointment/<int:doctor_id>/',views.bookappointment, name='bookappointment'),
 
 
