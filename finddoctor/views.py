@@ -66,6 +66,7 @@ def doctor(request, doctor_id):
 
     educations = Education.objects.all().filter(doctor_id = doctor_id)
     comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
+    allcomments =  comments.count()
     point_avg = ReviewDoctor.objects.all().aggregate(Avg('stars'))
 
     onepoint = ReviewDoctor.objects.all().filter(stars=1).count()
@@ -79,6 +80,7 @@ def doctor(request, doctor_id):
                 'page_title': doctor.name,
                 'educations': educations,
                 'comments':comments,
+                'allcomments':allcomments,
                 
 
 
