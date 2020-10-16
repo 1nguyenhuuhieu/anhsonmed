@@ -67,13 +67,22 @@ def doctor(request, doctor_id):
     educations = Education.objects.all().filter(doctor_id = doctor_id)
     comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
     allcomments =  comments.count()
-    point_avg = ReviewDoctor.objects.all().aggregate(Avg('stars'))
+    if allcomments:
+        pointavg = ReviewDoctor.objects.all().filter(doctor_id = doctor_id).aggregate(Avg('stars'))
+        pointavg = round(pointavg['stars__avg'],1)
+    else:
+        pointavg = 0
+   
 
-    onepoint = ReviewDoctor.objects.all().filter(stars=1).count()
-    twopoint = ReviewDoctor.objects.all().filter(stars=2).count()
-    threepoint = ReviewDoctor.objects.all().filter(stars=3).count()
-    fourpoint = ReviewDoctor.objects.all().filter(stars=4).count()
-    fivepoint = ReviewDoctor.objects.all().filter(stars=5).count()
+
+   
+    
+    
+    onepoint = comments.filter(stars=1).count()
+    twopoint = comments.filter(stars=2).count()
+    threepoint = comments.filter(stars=3).count()
+    fourpoint = comments.filter(stars=4).count()
+    fivepoint = comments.filter(stars=5).count()
 
   
     context = { 'doctor':doctor,
@@ -81,10 +90,10 @@ def doctor(request, doctor_id):
                 'educations': educations,
                 'comments':comments,
                 'allcomments':allcomments,
+                'pointavg':pointavg,
+              
                 
 
-
-                'point_avg':point_avg['stars__avg'],
 
                 "onepoint": onepoint,
                 "twopoint": twopoint,

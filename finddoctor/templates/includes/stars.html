@@ -1,0 +1,43 @@
+{% if point_avg < 1 and point_avg > 0 %}
+<i class="fas fa-star-half-alt"></i>
+{% elif point_avg < 1.5 %}
+<i class="fas fa-star"></i>
+{% elif point_avg < 2 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star-half-alt"></i>
+{% elif point_avg < 2.5 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star"></i>
+{% elif point_avg < 3 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star-half-alt"></i>
+{% elif point_avg < 3.5 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star "></i>
+{% elif point_avg < 4 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star-half-alt"></i>
+{% elif point_avg < 4.5 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star "></i>
+{% elif point_avg < 5 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star-half-alt"></i>
+{% elif point_avg == 5 %}
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star mr-1"></i>
+<i class="fas fa-star"></i>
+
+
+{% endif %}
