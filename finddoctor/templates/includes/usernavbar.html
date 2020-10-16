@@ -23,8 +23,9 @@
   <div class="dropdown-menu dropdown-menu-right">
     <span class="dropdown-item" type="button">Xin chào {{ user.username }}</span>
     <div class="dropdown-divider"></div>
-    <a href='#' class="dropdown-item text-dark"  ><i class="fas fa-user-edit mr-2"></i>Sửa thông tin</a>
-    <a href='/logout' class="dropdown-item  text-dark"  ><i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất</a>
+    <a href='{% url "appointment" %}' class="dropdown-item text-dark"  ><i class="far fa-calendar-check  " style="width: 30px;"></i>Lịch khám</a>
+    <a href='#' class="dropdown-item text-dark"  ><i class="fas fa-user-edit " style="width: 30px;"></i>Sửa thông tin</a>
+    <a href='/logout' class="dropdown-item  text-dark"  ><i class="fas fa-sign-out-alt " style="width: 30px;"></i>Đăng xuất</a>
   </div>
 </div>
 

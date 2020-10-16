@@ -248,3 +248,16 @@ def bookappointmentsuccesswithdoctor(request,doctor_id):
 
     }
     return render(request, 'bookappointmentsuccess.html', context)
+
+def appointment(request):
+
+    if request.user.is_authenticated:
+        user = User.objects.get(pk = request.user.id)
+        print(user)
+        context = {'page_title': 'Lịch khám' ,'page_navbar': 'green'}
+        return render(request, 'appointment.html',context)
+
+    else:
+        return redirect('login')
+
+

@@ -23,6 +23,7 @@ urlpatterns = [
     
    
     path('bookappointment/<int:doctor_id>/',views.bookappointment, name='bookappointment'),
+    path('appointment/',views.appointment, name='appointment'),
 
 
      
