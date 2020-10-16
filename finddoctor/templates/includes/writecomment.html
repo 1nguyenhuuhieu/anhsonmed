@@ -92,13 +92,20 @@
   <hr>
   
   <div class="mb-3">
-    <textarea class="form-control is-valid" id="validationTextarea" placeholder="Viết nhận xét của bạn" required rows="5" ></textarea>
+    <textarea class="form-control is-valid" id="validationTextarea" placeholder="Viết nhận xét của bạn" required rows="5" name='comment'></textarea>
     <div class="invalid-feedback">
       Phần này không được để trống
     </div>
   
   </div>
   
+
+  <div class="form-group mb-3">
+    <label for="otp">Mã xác nhận</label>
+    <input type="number" class="form-control" id="otp" aria-describedby="otp" name='otp'>
+    <small id="otp" class="form-text text-muted">Mã xác nhận đã khám tại bác sĩ này. Để trống nếu không có</small>
+  </div>
+
   
   
         

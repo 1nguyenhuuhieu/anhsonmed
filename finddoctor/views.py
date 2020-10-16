@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor
+from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -14,6 +14,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 
 from django.db.models import Avg
+
+import random
 # Create your views here.
 
 def index(request):
@@ -48,18 +50,27 @@ def index(request):
 
 
 def doctor(request, doctor_id):
+    
     doctor = Doctor.objects.get(pk=doctor_id)
-
-    if request.method == 'GET':
-        print (request.GET.get('points'))
-
+    otplist = AppointMent.objects.all().filter(doctor=doctor)
+   
     if request.method == 'POST':
+        verify = False
         points = request.POST.get('points')
         if points is None:
             points = 3
         comment = request.POST.get('comment')
         user = User.objects.get(pk = request.user.id)
-        newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor)
+        if otplist:
+            for otp in otplist:
+
+                if otp.vertify_code == int(request.POST.get('otp')):
+
+                    verify = True
+                    AppointMent.objects.filter(vertify_code=otp.vertify_code).delete()
+                    break
+       
+        newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor , verify= verify)
         newreview.save()
     
         return redirect('doctor', doctor_id)
@@ -162,6 +173,8 @@ def register(request):
 def bookappointment(request, doctor_id):
     
     doctor = Doctor.objects.get(pk=doctor_id)
+
+   
     
     context = {'doctor': doctor,'page_title': doctor.name ,'page_navbar': 'green'}
     if request.method == 'POST':
@@ -173,6 +186,12 @@ def bookappointment(request, doctor_id):
         user = User.objects.get(pk = request.user.id)
         newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user, doctor=doctor)
         newbook.save()
+
+        rannumber = random.randint(100000,999999)
+        newappointment = AppointMent(user=user, bookapartment=BookApartment.objects.latest('id'), doctor = doctor, vertify_code=rannumber)
+        newappointment.save()
+
+
         orderinfo = BookApartment.objects.latest('id')
         context.update({'orderinfo': orderinfo})
 
@@ -204,17 +223,26 @@ def bookappointmenthome(request):
     return render(request, 'bookappointmenthome.html', context)
 
 def bookappointmentsuccess(request):
-    orderinfo = BookApartment.objects.latest('id')
-    doctor = orderinfo.doctor
-    context = {
-        'orderinfo': orderinfo,
-        'doctor': doctor
+    context = {}
 
+    orderinfo = BookApartment.objects.latest('id')
+
+    verifycode = AppointMent.objects.all().filter(bookapartment=orderinfo)
+    if verifycode:
+        context = {'verifycode':verifycode[0].vertify_code}
+   
+    doctor = orderinfo.doctor
+    context.update ({
+        'orderinfo': orderinfo,
+        'doctor': doctor,
     }
+    )
     return render(request, 'bookappointmentsuccess.html', context)
 
 def bookappointmentsuccesswithdoctor(request,doctor_id):
+
     orderinfo = BookApartment.objects.latest('id')
+
     context = {
         'orderinfo': orderinfo
 

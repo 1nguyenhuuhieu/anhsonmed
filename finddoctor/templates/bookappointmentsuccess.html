@@ -23,6 +23,16 @@
   </div>
 </div>
 
+{% if verifycode %}
+<div class="row text-left justify-content-center mb-2">
+  <div class="col-1 "><i class="far fa-comment"></i></div>
+  <div class="col-10">
+{{ verifycode }}
+  </div>
+</div>
+{% endif %}
+
+
 {% if doctor %}
 
 <div class="row text-left justify-content-center mb-2">
@@ -31,6 +41,8 @@
 {{ doctor.name }}
   </div>
 </div>
+
+
 
 {% endif %}
 

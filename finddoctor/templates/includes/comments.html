@@ -9,8 +9,17 @@
     </div>
     <div class="col-10 pl-2">
       <p>{{ comment.user.userprofile.name }}  
+
+        {% if comment.verify == True %}
         <br>
-        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ {{ doctor.name }}</small>
+        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>
+          
+          Đã khám bệnh bởi bác sĩ {{ doctor.name }}
+
+        
+        </small>
+
+        {% endif %}
         </p>
 
         <div class="d-flex justify-content-between">

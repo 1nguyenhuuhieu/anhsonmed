@@ -106,15 +106,13 @@ class BookApartment(models.Model):
     date = models.CharField(max_length=200,null=True, blank=True)
    
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
-    rannumber = random.randint(100000,999999)
 
-    vertify_code = models.IntegerField(default=rannumber, null=True, blank=True)
    
     choicelist = [
-        ('ĐC', 'Đang Chờ'),
-        ('ĐX', 'Đã xong')
+        ('ĐC', 'Đang Chờ Xác Nhận'),
+        ('ĐX', 'Đã Khám Xong'),
     ]
-    status = models.CharField(max_length=50, choices=choicelist,null=True, blank=True)
+    status = models.CharField(max_length=50, choices=choicelist, default='Đang Chờ Xác Nhận',null=True, blank=True)
    
     def __str__(self):
         return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)
@@ -133,8 +131,16 @@ class ReviewDoctor(models.Model):
     def __str__(self):
         return self.comment
 
-class Apartments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.OneToOneField(BookApartment, on_delete=models.CASCADE)
+class AppointMent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    #Đã có tài khoản trước khi đến khám
+    bookapartment = models.OneToOneField(BookApartment, on_delete=models.CASCADE, null=True, blank=True)
+
+    #Chưa có tài khoản khi đến khám
+
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     rannumber = random.randint(100000,999999)
     vertify_code = models.IntegerField(default = rannumber, null=True, blank=True, unique=True)
+    def __str__(self):
+        return str(self.user) + ('-------') + str(self.bookapartment) + ('-------') + str(self.vertify_code)
