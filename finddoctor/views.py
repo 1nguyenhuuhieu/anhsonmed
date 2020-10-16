@@ -253,11 +253,28 @@ def appointment(request):
 
     if request.user.is_authenticated:
         user = User.objects.get(pk = request.user.id)
-        print(user)
-        context = {'page_title': 'Lịch khám' ,'page_navbar': 'green'}
+        appointment = BookApartment.objects.all().filter(user=user)
+        context = {'page_title': 'Lịch khám' ,'page_navbar': 'green'
+        ,'appointments': appointment}
         return render(request, 'appointment.html',context)
 
     else:
         return redirect('login')
 
 
+def appointmentdetail(request,bookappointment_id):
+    context = {}
+
+    orderinfo = BookApartment.objects.get(pk=bookappointment_id)
+
+    verifycode = AppointMent.objects.all().filter(bookapartment=orderinfo)
+    if verifycode:
+        context = {'verifycode':verifycode[0].vertify_code}
+   
+    doctor = orderinfo.doctor
+    context.update ({
+        'orderinfo': orderinfo,
+        'doctor': doctor,
+    }
+    )
+    return render(request, 'appointmentdetail.html', context)
