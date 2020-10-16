@@ -159,34 +159,39 @@
           </div>
     
         </div>
-  <p class="text-center">Đánh giá của bạn</p>
+  <p class="text-center mt-3 text-muted">Đánh giá dựa trên thang điểm 5.</p>
 
   <!-- starvote -->
-  <form id="voting" class="" method="POST">	
+  <form id="voting"  method="POST" class="was-validated">	
     {% csrf_token %}
     <div class="text-warning text-center">
-    <input type="radio" name="points" value="1" id="p-1" />
+    <input type="radio" name="points" value="1" id="p-1"  onclick="document.getElementById('comment').innerHTML='Rất không hài lòng'"/>
     <label for="p-1"><i class="fa fa-star-o fa-2x"></i></label>
     
-    <input type="radio" name="points" value="2" id="p-2" />
+    <input type="radio" name="points" value="2" id="p-2" onclick="document.getElementById('comment').innerHTML='Không hài lòng'" />
     <label for="p-2"><i class="fa fa-star-o fa-2x"></i></label>
     
-    <input type="radio" name="points" value="3" id="p-3" />
+    <input type="radio" name="points" value="3" id="p-3" onclick="document.getElementById('comment').innerHTML='Bình thường'" />
     <label for="p-3"><i class="fa fa-star-o fa-2x"></i></label>
     
-    <input type="radio" name="points" value="4" id="p-4" />
+    <input type="radio" name="points" value="4" id="p-4" onclick="document.getElementById('comment').innerHTML='Hài lòng'" />
     <label for="p-4"><i class="fa fa-star-o fa-2x"></i></label>
     
-    <input type="radio" name="points" value="5" id="p-5" />
+    <input type="radio" name="points" value="5" id="p-5" onclick="document.getElementById('comment').innerHTML='Cực kì hài lòng'" />
     <label for="p-5"><i class="fa fa-star-o fa-2x"></i></label>
   </div> 
 
 
   <script>
+    $(document).ready(function(){
+
+$("#p-3")[0].click();
+
+});  
     $('#voting input[name=points]').change(function() {
-	console.log($(this).parent().find('label'));
+
 	$(this).parent().children('label').each(function(key, val) {
-		console.log(val,$(val));
+
 		$(val).find('i').removeClass('fa-star').addClass('fa-star-o');
 	});
 	$(this).children('label i').removeClass('fa-star').addClass('fa-star-o');
@@ -195,10 +200,24 @@
 });
   </script>
   <!-- starvote -->
+
+  <h5 id='comment' class="text-center mt-3">Đánh giá của bạn</h5>
 <hr>
 
-      <label for="exampleFormControlTextarea1">Viết nhận xét dành cho bác sĩ</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='comment'></textarea>
+<div class="mb-3">
+  <textarea class="form-control is-valid" id="validationTextarea" placeholder="Viết nhận xét của bạn" required rows="5" ></textarea>
+  <div class="invalid-feedback">
+    Phần này không được để trống
+  </div>
+
+</div>
+
+
+
+      
+
+
+
 <div class="text-right">
   <button type="button" class="btn btn-outline-dark mt-4 mr-2" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
   
@@ -246,21 +265,100 @@
 
   <div class="row ">
     <div class="col-5 border-right text-center">
-      <h1 class="m-0">4.5</h1>
-      <span class="text-warning" style="font-size: 10px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star"></i></span>
+      <h1 class="m-0">{{point_avg}}</h1>
+      <span class="text-warning" style="font-size: 10px;">
+
+ 
+        {% if point_avg < 1 and point_avg > 0 %}
+        <i class="fas fa-star-half-alt"></i>
+        {% elif point_avg < 1.5 %}
+        <i class="fas fa-star"></i>
+        {% elif point_avg < 2 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star-half-alt"></i>
+        {% elif point_avg < 2.5 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star"></i>
+        {% elif point_avg < 3 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star-half-alt"></i>
+        {% elif point_avg < 3.5 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star "></i>
+        {% elif point_avg < 4 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star-half-alt"></i>
+        {% elif point_avg < 4.5 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star "></i>
+        {% elif point_avg < 5 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star-half-alt"></i>
+        {% elif point_avg == 5 %}
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star mr-1"></i>
+        <i class="fas fa-star"></i>
+
+
+        {% endif %}
+
+
+
+      </span>
      <br> <span class="text-muted" >{{ comments|length }} đánh giá</span>
     </div>
     <div class="col-7 ">
 
-      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-3"></i> <span class="text-dark"> 10 </span></p>  
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-3"></i> <span class="text-dark"> 
+        {% if fivepoint %}
+        {{ fivepoint }} 
+        {% else %}
+        0
+        {% endif %}
+      </span></p>  
       
-      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 
+        {% if fourpoint %}
+        {{ fourpoint }} 
+        {% else %}
+        0
+        {% endif %}
+      </span></p>  
       
-      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark">
+        {% if threepoint %}
+         {{ threepoint }} 
+         {% else %}
+         0
+         {% endif %}
+        </span></p>  
       
-      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 
+        {% if twopoint %}
+        {{ twopont }} 
+        {% else %}
+        0
+        {% endif %}
+      </span></p>  
 
-      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 10 </span></p>  
+      <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-1"></i><i class="far fa-star mr-3"></i><span class="text-dark"> 
+        {% if onepoint %}
+        {{ onepoint }}
+        {% else %}
+        0
+        {% endif %}
+       </span></p>  
       
       
 
@@ -270,58 +368,7 @@
   </div>
 </div>
 
-{% for comment in comments reversed %}
-
-  <hr>
-
-  <!-- comment -->
-  <div class="row no-gutters">
-    <div class="col-2 pr-1">
-      <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
-    </div>
-    <div class="col-10 pl-2">
-      <p>{{ comment.user.userprofile.name }}  
-        <br>
-        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ {{ doctor.name }}</small>
-        </p>
-
-        <div class="d-flex justify-content-between">
-          <small class="text-warning">
-
-       
-{% for i in '12345' %}
-{% if forloop.counter0 < comment.stars %}
-
-
-         <i class="fas fa-star mr-1"></i>
-
-         {% endif %}
-   
-         {% endfor %}
- 
-
-          </small>
-          <small class="text-muted">Đăng ngày {{ comment.created|date }}</small> 
-        </div>
-     
-
-<br>
-  <h5>Cực kì hài lòng</h5>
-    
-    <p>  {{ comment.comment}}</p>
-
-
-
-  
-
-  
-    </div>
-  </div>
-
-  <!-- end comment -->
-
-{% endfor %}
-
+{% include 'includes/comments.html' %}
 
 
 

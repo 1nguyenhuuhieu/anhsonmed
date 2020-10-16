@@ -3,11 +3,13 @@
 
 {% if page_navbar == 'green' %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm py-0 sticky-top">
+<nav class="navbar  navbar-dark bg-success shadow-sm py-0 sticky-top">
   {% if doctor %}
-  <a class="navbar-brand " href="{% url 'doctor' doctor.id %}">
+  <a class="navbar-brand " href="{% url 'doctor' doctor.id %}" >
 
   {% else %}
+
+
   <a class="navbar-brand " href="{% url 'home' %}">
     {% endif %}
     <i class="fas fa-arrow-left mr-2"></i> Quay lại 
@@ -17,7 +19,7 @@
 
   
 
-  {% include 'usernavbar.html' %}
+  {% include 'includes/usernavbar.html' %}
 
 
   
@@ -45,7 +47,7 @@
   
 
 
-    {% include 'usernavbar.html' %}
+    {% include 'includes/usernavbar.html' %}
 
       
    

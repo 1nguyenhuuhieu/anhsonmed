@@ -1,0 +1,68 @@
+{% for comment in comments reversed %}
+
+  <hr>
+
+  <!-- comment -->
+  <div class="row no-gutters">
+    <div class="col-2 pr-1">
+      <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
+    </div>
+    <div class="col-10 pl-2">
+      <p>{{ comment.user.userprofile.name }}  
+        <br>
+        <small class="text-success"><i class="fas fa-check-circle mr-1"></i>Đã khám bệnh bởi bác sĩ {{ doctor.name }}</small>
+        </p>
+
+        <div class="d-flex justify-content-between">
+          <small class="text-warning">
+
+       
+{% for i in '12345' %}
+{% if forloop.counter0 < comment.stars %}
+
+
+         <i class="fas fa-star mr-1"></i>
+
+         {% endif %}
+   
+         {% endfor %}
+ 
+
+          </small>
+          <small class="text-muted">Đăng ngày {{ comment.created|date }}</small> 
+        </div>
+     
+
+<br>
+
+
+  <h5>
+      {% if comment.stars == 1 %}
+      Rất không hài lòng
+      {% elif comment.stars == 2 %}
+      Không hài lòng
+      {% elif comment.stars == 3 %}
+      Bình thường
+      {% elif comment.stars == 4 %}
+      Hài lòng
+      {% elif comment.stars == 5 %}
+      Cực kì hài lòng
+
+
+      {% endif %}
+
+  </h5>
+    
+    <p>  {{ comment.comment}}</p>
+
+
+
+  
+
+  
+    </div>
+  </div>
+
+  <!-- end comment -->
+
+{% endfor %}

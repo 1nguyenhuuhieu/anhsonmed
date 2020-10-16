@@ -12,20 +12,14 @@ from django.contrib.auth import authenticate,login,logout
 
 
 from django.contrib.auth.models import User
+
+from django.db.models import Avg
 # Create your views here.
 
 def index(request):
   
-    user_id = request.user.id
-    if user_id:
-        user_avatar = UserProfile.objects.get(pk=user_id)
-        if user_avatar.avatar :
-            context = {'user_avatar': user_avatar.avatar}
 
-        else:
-            context = {'user_avatar': '/imgs/noavatar.jpg'}
-    else:
-        context = {}
+    context = {}
     
 
     doctors = Doctor.objects.all()
@@ -56,8 +50,13 @@ def index(request):
 def doctor(request, doctor_id):
     doctor = Doctor.objects.get(pk=doctor_id)
 
+    if request.method == 'GET':
+        print (request.GET.get('points'))
+
     if request.method == 'POST':
         points = request.POST.get('points')
+        if points is None:
+            points = 3
         comment = request.POST.get('comment')
         user = User.objects.get(pk = request.user.id)
         newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor)
@@ -67,11 +66,34 @@ def doctor(request, doctor_id):
 
     educations = Education.objects.all().filter(doctor_id = doctor_id)
     comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
+    point_avg = ReviewDoctor.objects.all().aggregate(Avg('stars'))
+
+    onepoint = ReviewDoctor.objects.all().filter(stars=1).count()
+    twopoint = ReviewDoctor.objects.all().filter(stars=2).count()
+    threepoint = ReviewDoctor.objects.all().filter(stars=3).count()
+    fourpoint = ReviewDoctor.objects.all().filter(stars=4).count()
+    fivepoint = ReviewDoctor.objects.all().filter(stars=5).count()
+
   
     context = { 'doctor':doctor,
                 'page_title': doctor.name,
                 'educations': educations,
-                'comments':comments,}
+                'comments':comments,
+                
+
+
+                'point_avg':point_avg['stars__avg'],
+
+                "onepoint": onepoint,
+                "twopoint": twopoint,
+                "threepoint": threepoint,
+                "fourpoint": fourpoint,
+                
+                "fivepoint": fivepoint,
+                
+                
+                
+                }
     return render(request,'doctor.html',context)
 
  
