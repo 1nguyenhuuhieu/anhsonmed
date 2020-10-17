@@ -168,13 +168,28 @@ def logoutfinddoctor(request):
 
 
 def register(request):
+    user = User.objects.all()
+    allusername = []
+    for i in user:
+        allusername.append(i.username)
+
     if request.method == 'POST':
         phone = request.POST.get('phone')
         password = request.POST.get('password')
-        user = User.objects.create_user(phone, 'lennon@thebeatles.com',password)
-        user.save()
-        redirect('home')
-    return render(request, 'register.html')
+
+        try:
+            User.objects.create_user(phone, 'lennon@thebeatles.com',password).save()
+        except:
+       # raise exception or error message
+            return HttpResponse('Không thành công. Tài khoản này đã tồn tại')
+
+
+        return redirect('login')
+    context = {'allusername': allusername,
+
+                
+    }
+    return render(request, 'register.html', context)
 
 def bookappointment(request, doctor_id):
     
