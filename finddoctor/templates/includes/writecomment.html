@@ -102,7 +102,7 @@
 
   <div class="form-group mb-3">
     <label for="otp">Mã xác nhận</label>
-    <input type="number" class="form-control" id="otp" aria-describedby="otp" name='otp'>
+    <input type="number" class="form-control" id="otp" aria-describedby="otp" name='otp' {% if verify_code%} value="{{verify_code}}"{% endif %}>
     <small id="otp" class="form-text text-muted">Mã xác nhận đã khám tại bác sĩ này. Để trống nếu không có</small>
   </div>
 

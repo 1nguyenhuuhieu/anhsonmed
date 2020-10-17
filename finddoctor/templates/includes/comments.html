@@ -5,10 +5,21 @@
   <!-- comment -->
   <div class="row no-gutters">
     <div class="col-2 pr-1">
+      {% if comment.user.userprofile.avatar %}
       <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
+      {% else %}
+      <img src="/media/imgs/noavatar.jpg" class="img-fluid rounded-circle" alt="">
+
+      
+      {% endif %}
     </div>
     <div class="col-10 pl-2">
-      <p>{{ comment.user.userprofile.name }}  
+      <p>
+      {% if comment.user.userprofile.name %}
+        {{ comment.user.userprofile.name }}  
+        {% else %}
+        {{ comment.user.username }}
+        {% endif %}
 
         {% if comment.verify == True %}
         <br>

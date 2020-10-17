@@ -108,11 +108,8 @@ class BookApartment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
 
    
-    choicelist = [
-        ('ĐC', 'Đang Chờ Xác Nhận'),
-        ('ĐX', 'Đã Khám Xong'),
-    ]
-    status = models.CharField(max_length=50, choices=choicelist, default='Đang Chờ Xác Nhận',null=True, blank=True)
+   
+    isdone = models.BooleanField(default=False,null=True, blank=True)
    
     def __str__(self):
         return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)
@@ -139,8 +136,16 @@ class AppointMent(models.Model):
 
     #Chưa có tài khoản khi đến khám
 
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
+
+
+    
+    def __str__(self):
+        return str(self.user) + ('-------') + str(self.bookapartment)
+
+class VerifyCode(models.Model):
+    appointment = models.OneToOneField(AppointMent, on_delete=models.CASCADE)
     rannumber = random.randint(100000,999999)
     vertify_code = models.IntegerField(default = rannumber, null=True, blank=True, unique=True)
     def __str__(self):
-        return str(self.user) + ('-------') + str(self.bookapartment) + ('-------') + str(self.vertify_code)
+        return str(self.appointment) + ('-------') + str(self.vertify_code)

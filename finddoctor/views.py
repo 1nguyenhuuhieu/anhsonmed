@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent
+from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent, VerifyCode
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -50,10 +50,33 @@ def index(request):
 
 
 def doctor(request, doctor_id):
+    verify_code = 0
     
     doctor = Doctor.objects.get(pk=doctor_id)
-    otplist = AppointMent.objects.all().filter(doctor=doctor)
-   
+
+    if request.user.is_authenticated:
+            verify_code = 0
+            user = User.objects.get(pk = request.user.id)
+            amplist = BookApartment.objects.all().filter(doctor=doctor,user=user,isdone=True)
+            deobietdattenlagi = AppointMent.objects.all().filter(bookapartment__in=amplist)
+            otplist = VerifyCode.objects.all().filter(appointment__in=deobietdattenlagi)
+            if otplist:
+                verify_code = otplist[0].vertify_code
+                context = {
+                'verify_code':verify_code,}
+            else:
+                print('0000000000--------')
+                context = {}
+                
+            
+      
+  
+    
+
+
+
+
+
     if request.method == 'POST':
         verify = False
         points = request.POST.get('points')
@@ -61,14 +84,13 @@ def doctor(request, doctor_id):
             points = 3
         comment = request.POST.get('comment')
         user = User.objects.get(pk = request.user.id)
-        if otplist:
-            for otp in otplist:
-
-                if otp.vertify_code == int(request.POST.get('otp')):
+        if verify_code != 0:
+    
+            if verify_code == int(request.POST.get('otp')):
 
                     verify = True
-                    AppointMent.objects.filter(vertify_code=otp.vertify_code).delete()
-                    break
+                    VerifyCode.objects.filter(vertify_code=verify_code).delete()
+                 
        
         newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor , verify= verify)
         newreview.save()
@@ -96,13 +118,12 @@ def doctor(request, doctor_id):
     fivepoint = comments.filter(stars=5).count()
 
   
-    context = { 'doctor':doctor,
+    context.update ({ 'doctor':doctor,
                 'page_title': doctor.name,
                 'educations': educations,
                 'comments':comments,
                 'allcomments':allcomments,
                 'pointavg':pointavg,
-              
                 
 
 
@@ -116,6 +137,7 @@ def doctor(request, doctor_id):
                 
                 
                 }
+    )
     return render(request,'doctor.html',context)
 
  
@@ -148,18 +170,25 @@ def test(request):
 
 
 def loginfinddoctor(request):
+    user = User.objects.all()
+    allusername = []
+    for i in user:
+        allusername.append(i.username)
+    context = {'allusername':allusername}
 
     if request.method == 'POST':
   
-        inputusername = request.POST.get('username')
+        inputusername = request.POST.get('phone')
         inputpassword = request.POST.get('password')
         user = authenticate(username = inputusername, password = inputpassword)
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            return HttpResponse('unsucess')
-    return render(request, 'login.html')
+            context.update({
+                            'lastphone': inputusername})
+            return render(request,'login.html',context)
+    return render(request, 'login.html', context)
 
 def logoutfinddoctor(request):
     logout(request)
@@ -179,6 +208,7 @@ def register(request):
 
         try:
             User.objects.create_user(phone, 'lennon@thebeatles.com',password).save()
+            return HttpResponse('Thành công')
         except:
        # raise exception or error message
             return HttpResponse('Không thành công. Tài khoản này đã tồn tại')
@@ -209,8 +239,13 @@ def bookappointment(request, doctor_id):
         newbook.save()
 
         rannumber = random.randint(100000,999999)
-        newappointment = AppointMent(user=user, bookapartment=BookApartment.objects.latest('id'), doctor = doctor, vertify_code=rannumber)
+        newappointment = AppointMent(user=user, bookapartment=BookApartment.objects.latest('id'), doctor = doctor)
+
         newappointment.save()
+
+        rannumber = random.randint(100000,999999)
+        verify = VerifyCode(appointment=newappointment,vertify_code=rannumber)
+        verify.save()
 
 
         orderinfo = BookApartment.objects.latest('id')
@@ -233,6 +268,13 @@ def bookappointmenthome(request):
         
         newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user)
         newbook.save()
+        newappointment = AppointMent(user=user,bookapartment=newbook)
+        newappointment.save()
+        rannumber = random.randint(100000,999999)
+        verify = VerifyCode(appointment=newappointment,vertify_code=rannumber)
+        verify.save()
+
+      
 
         return redirect('bookappointmentsuccess')
     
@@ -248,9 +290,9 @@ def bookappointmentsuccess(request):
 
     orderinfo = BookApartment.objects.latest('id')
 
-    verifycode = AppointMent.objects.all().filter(bookapartment=orderinfo)
-    if verifycode:
-        context = {'verifycode':verifycode[0].vertify_code}
+    # verifycode = AppointMent.objects.all().filter(bookapartment=orderinfo)
+    # if verifycode:
+    #     context = {'verifycode':verifycode[0].vertify_code}
    
     doctor = orderinfo.doctor
     context.update ({
@@ -288,9 +330,16 @@ def appointmentdetail(request,bookappointment_id):
 
     orderinfo = BookApartment.objects.get(pk=bookappointment_id)
 
-    verifycode = AppointMent.objects.all().filter(bookapartment=orderinfo)
-    if verifycode:
-        context = {'verifycode':verifycode[0].vertify_code}
+    if orderinfo.isdone == True:
+        appointment = AppointMent.objects.get(bookapartment=orderinfo)
+        verify = VerifyCode.objects.get(appointment=appointment)
+        verifycode = verify.vertify_code
+        context.update({'verifycode': verifycode})
+    
+
+    # verifycode = VerifyCode.objects.get(appointment=appointment)
+    # if verifycode:
+    #     context = {'verifycode':verifycode[0].vertify_code}
    
     doctor = orderinfo.doctor
     context.update ({

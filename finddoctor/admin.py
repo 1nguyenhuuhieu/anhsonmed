@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 
-from .models import Doctor, Department, Manager,Specialist,Education,University,Directorate,Reward,UserProfile, BookApartment, ReviewDoctor, AppointMent
+from .models import Doctor, Department, Manager,Specialist,Education,University,Directorate,Reward,UserProfile, BookApartment, ReviewDoctor, AppointMent, VerifyCode
 
 # Register your models here.
 
@@ -18,4 +18,5 @@ admin.site.register(UserProfile)
 admin.site.register(BookApartment)
 admin.site.register(ReviewDoctor)
 admin.site.register(AppointMent)
+admin.site.register(VerifyCode)
 
