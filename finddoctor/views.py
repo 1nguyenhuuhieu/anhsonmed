@@ -168,6 +168,12 @@ def logoutfinddoctor(request):
 
 
 def register(request):
+    if request.method == 'POST':
+        phone = request.POST.get('phone')
+        password = request.POST.get('password')
+        user = User.objects.create_user(phone, 'lennon@thebeatles.com',password)
+        user.save()
+        redirect('home')
     return render(request, 'register.html')
 
 def bookappointment(request, doctor_id):
