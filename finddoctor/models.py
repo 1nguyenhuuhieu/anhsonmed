@@ -130,9 +130,6 @@ class ReviewDoctor(models.Model):
     verify = models.BooleanField(default=False)
 
 
-    def __str__(self):
-        return self.comment
-
 class AppointMent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
