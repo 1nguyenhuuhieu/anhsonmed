@@ -409,10 +409,10 @@ def alldoctors(request):
 def department(request, department_id):
     try:
         department = Department.objects.get(pk=department_id)
-        context = {}
+        context = {'page_title': department.name, 'department':department}
         return render(request, 'department.html', context)
-    except expression as identifier:
-        pass
+    except:
+        return HttpResponse('404')
    
 
 
