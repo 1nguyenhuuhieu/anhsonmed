@@ -25,7 +25,9 @@
     <div class="dropdown-divider"></div>
     <a href='{% url "appointment" %}' class="dropdown-item text-dark"  ><i class="far fa-calendar-check  " style="width: 30px;"></i>Lịch khám</a>
 
-    <a href='{% url "profile" user.id%}' class="dropdown-item text-dark"  ><i class="fas fa-user-edit " style="width: 30px;"></i>Sửa thông tin</a>
+    <a href='{% url "mycomment" %}' class="dropdown-item text-dark"  ><i class="fas fa-poll  " style="width: 30px;"></i>Đánh giá</a>
+
+    <a href='{% url "profile"%}' class="dropdown-item text-dark"  ><i class="fas fa-user-edit " style="width: 30px;"></i>Sửa thông tin</a>
 
 
     <a href='/logout' class="dropdown-item  text-dark"  ><i class="fas fa-sign-out-alt " style="width: 30px;"></i>Đăng xuất</a>

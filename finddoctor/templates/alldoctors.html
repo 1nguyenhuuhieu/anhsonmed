@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="mt-5 mb-5">
+
+    <div class="container">
+  
+  
+  
+    <h4 class="text-center"><i class="fas fa-user-md mr-2"></i> Tất cả Bác Sĩ</h4>
+   <hr>
+
+   {% for doctor in doctors %}
+
+
+   {% include 'includes/doctor.html' %}
+
+   {% endfor %}
+
+
+
+   </div>
+   </section>
+
+{% endblock %}

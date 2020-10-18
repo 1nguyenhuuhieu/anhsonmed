@@ -13,8 +13,10 @@
           
 
         {% for department in top_departments_list %}
+
   
   <div class="col-6 p-2 ">
+    <a href="{% url 'department' department.id %}" class="text-reset text-decoration-none">
           
     <div class="card  shadow-sm borderradius10 " >
     <img src="/media/{{ department.avatar }}" class="card-img-top  bordertopradius10" alt="...">
@@ -23,6 +25,7 @@
   
     </div>
   </div>
+</a>
   
   </div>
 

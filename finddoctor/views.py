@@ -30,6 +30,7 @@ def index(request):
     
 
     doctors = Doctor.objects.all()
+
     departments = Department.objects.all()
     doctor_names = []
     for i in doctors:
@@ -325,7 +326,7 @@ def appointment(request):
     if request.user.is_authenticated:
         user = User.objects.get(pk = request.user.id)
         appointment = BookApartment.objects.all().filter(user=user)
-        context = {'page_title': 'Lịch khám' ,'page_navbar': 'green'
+        context = {'page_title': 'Lịch khám' 
         ,'appointments': appointment}
         countwait = appointment.filter(isdone='Đang chờ khám').count()
         countdone = appointment.filter(isdone='Đã khám xong').count()
@@ -360,36 +361,60 @@ def appointmentdetail(request,bookappointment_id):
     )
     return render(request, 'appointmentdetail.html', context)
 
-def profile(request, user_id):
+def profile(request):
     
     context = {'page_title': 'Thông tin tài khoản'}
 
-    if request.method == 'POST':
-        
-        name = request.POST.get('name')
-        user = User.objects.get(pk=user_id)
-        updateprofile = UserProfile.objects.get(user=user)
-        updateprofile.name = name
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            user = User.objects.get(pk=user_id)
+            updateprofile = UserProfile.objects.get(user=user)
+            if request.FILES['avatar']:
+                myfile = request.FILES['avatar']
+                fs = FileSystemStorage(location='media/imgs/avatars/')
+                filename = fs.save(myfile.name, myfile)
+                avatar = '/imgs/avatars/' + str(filename)
+                updateprofile.avatar = avatar
+                updateprofile.save()
+            try:
+                updateprofile.name = name
+                updateprofile.save()
+                return redirect('profile',user_id)
+            except:
+                return HttpResponse('Lỗi!')
+        return render(request, 'profile.html', context)
+    else:
+        return HttpResponse('Vui lòng đăng nhập')
 
-        if request.FILES['avatar']:
-            myfile = request.FILES['avatar']
-            fs = FileSystemStorage(location='media/imgs/avatars/')
-            filename = fs.save(myfile.name, myfile)
-            uploaded_file_url = fs.url(filename)
 
-            print('-fuck yeah-')
-            print( uploaded_file_url)
+def mycomment(request):
+    if request.user.is_authenticated:
+        context = {'page_title': 'Đánh giá của tôi'}
+        user = User.objects.get(id = request.user.id)
+        comments = ReviewDoctor.objects.all().filter(user=user)
+        context.update({'comments':comments})
+        return render (request, 'mycomment.html', context)
+    else:
+        return HttpResponse('Vui lòng đăng nhập')
 
+def alldoctors(request):
+    context = {'page_title': 'Tất cả bác sĩ'}
+    doctors = Doctor.objects.all()
+    educations = Education.objects.all()
+    context.update({'doctors':doctors, 'educations': educations})
+    return render(request, 'alldoctors.html', context)
 
-        try:
-            updateprofile.save()
-            return redirect('profile',user_id)
-        except:
-            return HttpResponse('Lỗi!')
-        
+def department(request, department_id):
+    try:
+        department = Department.objects.get(pk=department_id)
+        context = {}
+        return render(request, 'department.html', context)
+    except expression as identifier:
+        pass
    
 
 
-    return render(request, 'profile.html', context)
     
 
