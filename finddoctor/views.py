@@ -15,6 +15,8 @@ from django.contrib.auth.models import User
 
 from django.db.models import Avg
 
+
+
 import random
 # Create your views here.
 
@@ -203,7 +205,10 @@ def register(request):
         password = request.POST.get('password')
 
         try:
-            User.objects.create_user(phone, 'lennon@thebeatles.com',password).save()
+            newuser = User.objects.create_user(phone, 'lennon@thebeatles.com',password)
+            newuser.save()
+            newuserprofile = UserProfile(user=newuser, avatar = 'imgs/noavatar.jpg',name=phone)
+            newuserprofile.save()
             return HttpResponse('Thành công')
         except:
        # raise exception or error message
@@ -315,6 +320,10 @@ def appointment(request):
         appointment = BookApartment.objects.all().filter(user=user)
         context = {'page_title': 'Lịch khám' ,'page_navbar': 'green'
         ,'appointments': appointment}
+        countwait = appointment.filter(isdone='Đang chờ khám').count()
+        countdone = appointment.filter(isdone='Đã khám xong').count()
+        countcancel = appointment.filter(isdone='Đã huỷ').count()
+        context.update({'countwait': countwait, 'countdone': countdone, 'countcancel': countcancel})
         return render(request, 'appointment.html',context)
 
     else:
@@ -348,9 +357,12 @@ def profile(request, user_id):
     context = {'page_title': 'Thông tin tài khoản'}
 
     if request.method == 'POST':
-        avatar = request.POST.get('avatar')
+        name = request.POST.get('name')
         user = User.objects.get(pk=user_id)
         updateprofile = UserProfile.objects.get(user=user)
-        updateprofile.avatar = avatar
+        updateprofile.name = name
         updateprofile.save()
+        return redirect('profile',user_id)
     return render(request, 'profile.html', context)
+    
+
