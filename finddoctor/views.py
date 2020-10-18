@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent, VerifyCode,Specialist, Manager
+from .models import *
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -14,6 +14,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 
 from django.db.models import Avg
+
+
+from django.core.files.storage import FileSystemStorage
 
 
 
@@ -210,10 +213,13 @@ def register(request):
             newuser.save()
             newuserprofile = UserProfile(user=newuser, avatar = 'imgs/noavatar.jpg',name=phone)
             newuserprofile.save()
-            return HttpResponse('Thành công')
+            user = authenticate(username = phone, password = password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
         except:
        # raise exception or error message
-            return HttpResponse('Không thành công. Tài khoản này đã tồn tại')
+            return HttpResponse('<h1>Không thành công. Tài khoản này đã tồn tại</h1>')
 
 
         return redirect('login')
@@ -355,15 +361,35 @@ def appointmentdetail(request,bookappointment_id):
     return render(request, 'appointmentdetail.html', context)
 
 def profile(request, user_id):
+    
     context = {'page_title': 'Thông tin tài khoản'}
 
     if request.method == 'POST':
+        
         name = request.POST.get('name')
         user = User.objects.get(pk=user_id)
         updateprofile = UserProfile.objects.get(user=user)
         updateprofile.name = name
-        updateprofile.save()
-        return redirect('profile',user_id)
+
+        if request.FILES['avatar']:
+            myfile = request.FILES['avatar']
+            fs = FileSystemStorage(location='/media/photos')
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+
+            print('-fuck yeah-')
+            print( uploaded_file_url)
+
+
+        try:
+            updateprofile.save()
+            return redirect('profile',user_id)
+        except:
+            return HttpResponse('Lỗi!')
+        
+   
+
+
     return render(request, 'profile.html', context)
     
 
