@@ -1,7 +1,7 @@
 import datetime
 from django.utils import timezone
 
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
@@ -18,6 +18,7 @@ from django.db.models import Avg
 
 from django.core.files.storage import FileSystemStorage
 
+from django.http import Http404
 
 
 import random
@@ -411,8 +412,8 @@ def department(request, department_id):
         department = Department.objects.get(pk=department_id)
         context = {'page_title': department.name, 'department':department}
         return render(request, 'department.html', context)
-    except:
-        return HttpResponse('404')
+    except Department.DoesNotExist:
+        raise Http404("Question does not exist")
    
 
 
