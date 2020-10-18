@@ -26,6 +26,9 @@ urlpatterns = [
     path('appointment/',views.appointment, name='appointment'),
     path('appointment/<int:bookappointment_id>',views.appointmentdetail, name='appointmentdetail'),
 
+    #User Profile 
+    path('profile/<int:user_id>',views.profile, name='profile'),
+
 
      
 ]

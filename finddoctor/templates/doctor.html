@@ -6,111 +6,7 @@
 
 <div class="container pt-4">
 
-  <div class="text-center">
-    <img src="/media/{{ doctor.avatar }}" alt="" class="rounded-circle img-fluid w-75 border shadow" style="max-width: 300px;">
-
-    <h5 class="mt-4">{{doctor.name}}
-      <br>
-      <small class="text-muted"> {{ doctor.highlight }}</small>
-      <hr class="w-50">
-  <small class="text-warning">
-    
-    {% include 'includes/stars.html' %}
-
-      
-      <a href=#allcomments class="text-muted">(Xem {{ allcomments }} đánh giá)</a>
-
-     
-
-      </small>
-  
-    </h5>
-
-
-  
-    <div class="d-flex justify-content-between pt-3 pb-1 ">
-
-
-
-      {% if request.user.is_authenticated %}
-  
-      <a href="{% url 'bookappointment' doctor.id %}" class="btn btn-success"><i class="far fa-calendar-check mr-2"></i>Đăng Ký Khám</a> 
-
-      {% else %}
-
-      <!-- Button trigger modal -->
-<button type="button " class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-<i class="far fa-calendar-check mr-2"></i> Đăng Ký Khám
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content ">
-<div class="modal-header bg-danger">
-  <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  Bạn cần đăng nhập để đăng ký khám
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
-  <a href="{% url 'login' %}"  class="btn btn-outline-dark">Đăng Nhập</a>
-  <a href="{% url 'login' %}"  class="btn btn-success">Đăng Ký</a>
-</div>
-</div>
-</div>
-</div>
-
-      {% endif %}
-
-
-
-     
-
-
-  
-      <div>
-        <button class="btn btn-light bg-jumbotron border-0 mr-2"><i class="fas fa-phone"></i></button>
-        <button class="btn btn-light bg-jumbotron border-0 "><i class="fas fa-qrcode"></i></button>
-      </div>
-     
-    </div>
-
-  </div>
-
-
-
-  <hr>
-
-  <div class="row mb-2">
-    <div class="col-1">
-      <i class="fas fa-stethoscope"></i></div>
-    <div class="col-11">Phẫu thuật nội soi
-    </div>
-  </div>
-
-
-  <div class="row mb-2 ">
-    <div class="col-1">
-      <i class="fas fa-clinic-medical"></i></div>
-    <div class="col-11">Trưởng Khoa tại <a href="#" >Khoa Ngoại</a>
-    </div>
-  </div>
-
-  {% for education in educations %}
-
-  <div class="row mb-2">
-    <div class="col-1">  <i class="fas fa-graduation-cap"></i></div>
-    <div class="col-11">{{ education.title|title }} tại <a href="/university/{{ education.certified_by}}" >{{ education.certified_by|title }}</a> vào năm {{ education.certified_date.year}}
-    </div>
-  </div>
-
-
-  {% endfor %}
+{% include 'includes/aboutdoctor.html' %}
 <hr>
 
 {% include 'includes/writecomment.html' %}
@@ -120,7 +16,7 @@
   <hr >
   <div class="row " >
     <div class="col-5 border-right text-center">
-      <h1 class="m-0">{{ pointavg }}</h1>
+      <h1 class="m-0">{{ point_avg }}</h1>
       <span class="text-warning" style="font-size: 10px;">
 
  

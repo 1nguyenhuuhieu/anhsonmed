@@ -160,3 +160,7 @@ border-top-right-radius: 10px;
 #voting input[name="points"] {
 	display: none;
 }
+
+.profileicon{
+  width: 30px;
+}

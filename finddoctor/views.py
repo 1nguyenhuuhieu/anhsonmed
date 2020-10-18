@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from django.shortcuts import HttpResponse
 
-from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent, VerifyCode
+from .models import Doctor,Department,Education, UserProfile, BookApartment, ReviewDoctor, ReviewDoctor, AppointMent, VerifyCode,Specialist, Manager
 from itertools import chain
 from django.contrib.auth import authenticate,login,logout
 
@@ -57,7 +57,7 @@ def doctor(request, doctor_id):
     if request.user.is_authenticated:
             verify_code = 0
             user = User.objects.get(pk = request.user.id)
-            amplist = BookApartment.objects.all().filter(doctor=doctor,user=user,isdone=True)
+            amplist = BookApartment.objects.all().filter(doctor=doctor,user=user,isdone='Đã khám xong')
             deobietdattenlagi = AppointMent.objects.all().filter(bookapartment__in=amplist)
             otplist = VerifyCode.objects.all().filter(appointment__in=deobietdattenlagi)
             if otplist:
@@ -67,15 +67,6 @@ def doctor(request, doctor_id):
             else:
                 print('0000000000--------')
                 context = {}
-                
-            
-      
-  
-    
-
-
-
-
 
     if request.method == 'POST':
         verify = False
@@ -117,13 +108,18 @@ def doctor(request, doctor_id):
     fourpoint = comments.filter(stars=4).count()
     fivepoint = comments.filter(stars=5).count()
 
+    speciallist = Specialist.objects.all().filter(doctor=doctor)
+    manager = Manager.objects.all().filter(doctor=doctor)
+
   
     context.update ({ 'doctor':doctor,
                 'page_title': doctor.name,
                 'educations': educations,
                 'comments':comments,
                 'allcomments':allcomments,
-                'pointavg':pointavg,
+                'point_avg':pointavg,
+                'speciallist': speciallist,
+                'manager': manager,
                 
 
 
@@ -330,16 +326,15 @@ def appointmentdetail(request,bookappointment_id):
 
     orderinfo = BookApartment.objects.get(pk=bookappointment_id)
 
-    if orderinfo.isdone == True:
+    if orderinfo.isdone == 'Đã khám xong':
         appointment = AppointMent.objects.get(bookapartment=orderinfo)
-        verify = VerifyCode.objects.get(appointment=appointment)
-        verifycode = verify.vertify_code
-        context.update({'verifycode': verifycode})
+        # try:
+        #     verify = VerifyCode.objects.get(appointment=appointment)
+        #     verifycode = verify.vertify_code
+        #     context.update({'verifycode': verifycode})
+        # except:
+        #     pass
     
-
-    # verifycode = VerifyCode.objects.get(appointment=appointment)
-    # if verifycode:
-    #     context = {'verifycode':verifycode[0].vertify_code}
    
     doctor = orderinfo.doctor
     context.update ({
@@ -348,3 +343,14 @@ def appointmentdetail(request,bookappointment_id):
     }
     )
     return render(request, 'appointmentdetail.html', context)
+
+def profile(request, user_id):
+    context = {'page_title': 'Thông tin tài khoản'}
+
+    if request.method == 'POST':
+        avatar = request.POST.get('avatar')
+        user = User.objects.get(pk=user_id)
+        updateprofile = UserProfile.objects.get(user=user)
+        updateprofile.avatar = avatar
+        updateprofile.save()
+    return render(request, 'profile.html', context)

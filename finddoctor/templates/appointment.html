@@ -15,27 +15,190 @@
     <div class="container">
       <h5>  <i class="far fa-calendar-check mr-3 mt-4"></i>Danh sách Đăng Ký Khám </h5>
    <hr class="mb-4">
-     
 
+   <ul class="nav nav-pills mb-4 nav-fill" id="myTab" role="tablist">
+    <li class="nav-item " role="presentation">
+      <a class="nav-link active p-2 " id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tất cả</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link  p-2" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-selected="false">Đang chờ</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link  p-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Đã xong</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link  p-2" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Đã huỷ</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+
+        
    {% for appointment in appointments %}
 
+
  
-  <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
-   <div class="card borderradius15 shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+   {% if appointment.isdone == 'Đã khám xong' %}
+   <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+     <div class="card borderradius15 shadow-sm mb-4 border-success">
+       <div class="card-body">
+         <h5 class="card-title text-success"><i class="far fa-check-circle mr-2"></i>{{ appointment.isdone }}</h5>
+         <hr>
+         <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+         {% if appointment.doctor %} 
+         <h6>
+         Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+         </h6>
+         {% endif %}
+         <hr>
+         <p class="card-text">{{ appointment.description }}</p>
+       </div>
+     </div>
+     </a>
+   
+       {% elif appointment.isdone == 'Đã huỷ' %}
+       <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+         <div class="card borderradius15 shadow-sm mb-4 border-danger">
+           <div class="card-body">
+             <h5 class="card-title text-danger"><i class="fas fa-times-circle mr-2"></i>{{ appointment.isdone }}</h5>
+             <hr> 
+             <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+             {% if appointment.doctor %} 
+             <h6>
+             Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+             </h6>
+             {% endif %}
+             <hr>
+             <p class="card-text">{{ appointment.description }}</p>
+           </div>
+         </div>
+         </a>
+       
+     {% else %}
+   
+     <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+       <div class="card borderradius15 shadow-sm mb-4 border-warning">
+         <div class="card-body">
+           <h5 class="card-title text-warning"><i class="far fa-clock mr-2"></i>{{ appointment.isdone }}</h5>
+           <hr>
+           <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+           {% if appointment.doctor %} 
+           <h6>
+           Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+           </h6>
+           {% endif %}
+           <hr>
+           <p class="card-text">{{ appointment.description }}</p>
+         </div>
+       </div>
+       </a>
+     {% endif %}
+   
+   
+      {% endfor %}
+     
+
+    </div>
+    <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+
+      {% for appointment in appointments %}
+
+
+ 
+
+      {% if appointment.isdone == 'Đang chờ khám' %}
+
       
+        <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+          <div class="card borderradius15 shadow-sm mb-4 border-warning">
+            <div class="card-body">
+              <h5 class="card-title text-warning"><i class="far fa-clock mr-2"></i>{{ appointment.isdone }}</h5>
+              <hr>
+              <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+              {% if appointment.doctor %} 
+              <h6>
+              Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+              </h6>
+              {% endif %}
+              <hr>
+              <p class="card-text">{{ appointment.description }}</p>
+            </div>
+          </div>
+          </a>
+        {% endif %}
+      
+      
+         {% endfor %}
+
+         
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      {% for appointment in appointments %}
+
+
+ 
+
+      {% if appointment.isdone == 'Đã khám xong' %}
+      <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+        <div class="card borderradius15 shadow-sm mb-4 border-success">
+          <div class="card-body">
+            <h5 class="card-title text-success"><i class="far fa-check-circle mr-2"></i>{{ appointment.isdone }}</h5>
+            <hr>
+            <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+            {% if appointment.doctor %} 
+            <h6>
+            Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+            </h6>
+            {% endif %}
+            <hr>
+            <p class="card-text">{{ appointment.description }}</p>
+          </div>
+        </div>
+        </a>
+   
+        {% endif %}
+      
+      
+         {% endfor %}
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      {% for appointment in appointments %}
+
+
+ 
+
+  
+      
+          {% if appointment.isdone == 'Đã huỷ' %}
+          <a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+            <div class="card borderradius15 shadow-sm mb-4 border-danger">
+              <div class="card-body">
+                <h5 class="card-title text-danger"><i class="fas fa-times-circle mr-2"></i>{{ appointment.isdone }}</h5>
+                <hr> 
+                <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+                {% if appointment.doctor %} 
+                <h6>
+                Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+                </h6>
+                {% endif %}
+                <hr>
+                <p class="card-text">{{ appointment.description }}</p>
+              </div>
+            </div>
+            </a>
+          
+    
+        {% endif %}
+      
+      
+         {% endfor %}
     </div>
   </div>
-  
-</a>
-   {% endfor %}
-  
-  
-  
-  
-  </div>
+
+
+   
      
   
   </section>
