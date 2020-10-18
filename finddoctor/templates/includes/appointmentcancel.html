@@ -1,0 +1,16 @@
+<a href="{% url 'appointmentdetail' appointment.id %}" class="text-reset text-decoration-none ">
+    <div class="card borderradius15 shadow-sm mb-4 border-danger">
+      <div class="card-body">
+        <h5 class="card-title text-danger"><i class="fas fa-times-circle mr-2"></i>{{ appointment.isdone }}</h5>
+        <hr> 
+        <h6 class="card-subtitle mb-2 text-muted">{{ appointment.time }} ngày {{ appointment.date }} </h6>
+        {% if appointment.doctor %} 
+        <h6>
+        Bác sĩ <span class="font-weight-bold">{{appointment.doctor}}</span>
+        </h6>
+        {% endif %}
+        
+        <p class="card-text">{{ appointment.description }}</p>
+      </div>
+    </div>
+    </a>

@@ -56,6 +56,9 @@ def doctor(request, doctor_id):
     
     doctor = Doctor.objects.get(pk=doctor_id)
 
+    countappointmentdone = BookApartment.objects.all().filter(doctor=doctor).filter(isdone='Đã khám xong').count()
+    context = {'countappointmentdone': countappointmentdone}
+
     if request.user.is_authenticated:
             verify_code = 0
             user = User.objects.get(pk = request.user.id)
@@ -64,11 +67,9 @@ def doctor(request, doctor_id):
             otplist = VerifyCode.objects.all().filter(appointment__in=deobietdattenlagi)
             if otplist:
                 verify_code = otplist[0].vertify_code
-                context = {
-                'verify_code':verify_code,}
-            else:
-                print('0000000000--------')
-                context = {}
+                context.update({
+                'verify_code':verify_code,}) 
+        
 
     if request.method == 'POST':
         verify = False
