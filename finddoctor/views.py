@@ -373,7 +373,7 @@ def profile(request, user_id):
 
         if request.FILES['avatar']:
             myfile = request.FILES['avatar']
-            fs = FileSystemStorage(location='/media/photos')
+            fs = FileSystemStorage(location='media/imgs/avatars/')
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
 
