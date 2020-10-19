@@ -435,7 +435,12 @@ def department(request, department_id):
         raise Http404("Question does not exist")
 
 def ask(request, ask_id):
-    context = {}
+    context = {'page_title': 'Hỏi bác sĩ'}
+    try:
+        ask = AskDoctor.objects.get(pk=ask_id)
+        context.update({'ask': ask})
+    except:
+        raise Http404("Question does not exist")
 
     return render(request, 'ask.html', context)
    
