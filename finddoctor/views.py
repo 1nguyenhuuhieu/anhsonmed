@@ -438,7 +438,9 @@ def ask(request, ask_id):
     context = {'page_title': 'Hỏi bác sĩ'}
     try:
         ask = AskDoctor.objects.get(pk=ask_id)
-        context.update({'ask': ask})
+        answer = Answer.objects.all().filter(ask=ask)
+   
+        context.update({'ask': ask,'answer':answer})
     except:
         raise Http404("Question does not exist")
 

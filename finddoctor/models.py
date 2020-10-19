@@ -82,11 +82,11 @@ class University(models.Model):
         return self.name
 
 class Education(models.Model):
-    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    certified_date = models.DateField()
-    certified_by = models.ForeignKey(University, on_delete=models.CASCADE)
-    main = models.BooleanField(default=False)
+    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE,null=True, blank=True)
+    title = models.CharField(max_length=200,null=True, blank=True)
+    certified_date = models.DateField(null=True, blank=True)
+    certified_by = models.ForeignKey(University, on_delete=models.CASCADE,null=True, blank=True)
+    main = models.BooleanField(default=False,null=True, blank=True)
     def __str__(self):
         return str(self.title) + '-----'+ str(self.doctor) 
 
@@ -160,10 +160,12 @@ class AskDoctor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     ask = models.TextField(max_length=1000, null=True, blank=True)
     created = models.DateField(null=True, blank=True, auto_now_add=True)
+    photo = models.ImageField(upload_to = 'imgs/asks/', null= True, blank = True)
+    isanswer = models.BooleanField(null=True,blank=True,default=False)
 
 
 class Answer(models.Model):
     ask = models.ForeignKey(AskDoctor, on_delete=models.CASCADE, null=True, blank=True)
-    aswer = models.TextField(max_length=1000, null=True, blank=True)
+    answer = models.TextField(max_length=1000, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created     = models.DateTimeField(editable=False,null=True, blank=True, auto_now_add=True)

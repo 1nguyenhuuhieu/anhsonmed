@@ -4,10 +4,53 @@
 
 <div class="container">
 
-    <div class="row">
-        <div class="col-3"> <img src="/media/{{ ask.user.userprofile.avatar}}" alt="" class="img-fluid"></div>
-        <div class="col-9">{{ ask.ask }}</div>
+    <div class="row mt-4 no-gutters">
+        <div class="col-2"> <img src="/media/{{ ask.user.userprofile.avatar}}" alt="" class="img-fluid rounded-circle"></div>
+        <div class="col-10 pl-4">
+            <h5>{{ ask.user.userprofile.name}}</h5>
+            Đăng vào {{ ask.created }}
+        </div>
     </div>
+    <hr>
+    {% if ask.isanswer == True %}
+    <p class="text-success"> <i class="fas fa-check-circle mr-2"></i>Trả lời bởi bác sĩ xxxx ngày xxx</p>
+
+   
+    {% else %}
+    <p class="text-danger"><i class="fas fa-times-circle mr-2"></i>Câu hỏi này chưa được trả lời</p>
+    {% endif %}
+    <hr>
+    <img src="/media/{{ ask.photo}}" alt="" class="img-fluid border rounded shadow-sm mb-3">
+
+    <p>{{ask.ask}}</p>
+
+    <hr>
+
+
+    <div class="row no-gutters">
+        <div class="col-2 pr-1">
+      
+          <img src="/media/imgs/noavatar.jpg" class="img-fluid rounded-circle" alt="">
+    
+          
+        </div>
+        <div class="col-10 pl-2">
+
+ 
+              <small class="text-muted">Đăng ngày {{ answer.created }}</small> 
+         
+    <hr>
+        
+        <p>  {{ answer.answer}}</p>
+    
+    
+    
+      
+    
+      
+        </div>
+      </div>
+
 
 </div>
 {% endblock %}
