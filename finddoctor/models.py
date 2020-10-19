@@ -158,11 +158,9 @@ class VerifyCode(models.Model):
 
 class AskDoctor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
     ask = models.TextField(max_length=1000, null=True, blank=True)
-    created     = models.DateField(null=True, blank=True, auto_now_add=True)
-    def __str__(self):
-        return str(self.user) + '---' + str(self.ask)
+    created = models.DateField(null=True, blank=True, auto_now_add=True)
+
 
 class Answer(models.Model):
     ask = models.ForeignKey(AskDoctor, on_delete=models.CASCADE, null=True, blank=True)

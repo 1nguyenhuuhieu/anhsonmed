@@ -8,9 +8,9 @@
   <div class="row no-gutters">
     <div class="col-2 pr-1">
       {% if comment.user.userprofile.avatar %}
-      <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid " alt="">
+      <img src="/media/{{ comment.user.userprofile.avatar }}" class="img-fluid rounded-circle shadow-sm" alt="" >
       {% else %}
-      <img src="/media/imgs/noavatar.jpg" class="img-fluid" alt="">
+      <img src="/media/imgs/noavatar.jpg" class="img-fluid rounded-circle" alt="">
 
       
       {% endif %}
