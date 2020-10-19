@@ -15,7 +15,14 @@
   <a href="{% url 'ask' ask.id %}" class="text-reset text-decoration-none">
     <div class="media text-muted pt-3">
 
+      {% if ask.user.userprofile.avatar %}
+
       <img src="/media/{{ ask.user.userprofile.avatar }}" alt="" style="width: 30px;" class="mr-2 rounded">
+      {% else %}
+      <img src="/media/imgs/noavatar.jpg" alt="" style="width: 30px;" class="mr-2 rounded">
+
+      
+      {% endif %}
 
 
       <p class="media-body pb-3 mb-0 small lh-125 border-gray">
