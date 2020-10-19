@@ -17,6 +17,8 @@ class DoctorAdmin(admin.ModelAdmin):
 
     inlines = [EducationInline]
 
+
+
 # Register your models here.
 
 
@@ -33,4 +35,6 @@ admin.site.register(BookApartment)
 admin.site.register(ReviewDoctor)
 admin.site.register(AppointMent)
 admin.site.register(VerifyCode)
+admin.site.register(AskDoctor)
+admin.site.register(Answer)
 

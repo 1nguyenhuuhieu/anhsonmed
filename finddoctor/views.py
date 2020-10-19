@@ -46,12 +46,15 @@ def index(request):
     for i in top_doctors_list:
         top_doctors_list_id.append(i.id)
     top_doctors_education = Education.objects.all().filter(doctor_id__in=top_doctors_list_id).filter(main=True)
+
+    asks = AskDoctor.objects.all().order_by('-pk')[:5]
     
     context.update({'top_doctors_list': top_doctors_list,
                 'doctor_names':doctor_names,
                 'top_doctors_education':  top_doctors_education,
                 'page_title': "Home",
-                'top_departments_list':  top_departments_list
+                'top_departments_list':  top_departments_list,
+                'asks': asks
     })
     return render(request,'index.html', context)
 
@@ -368,21 +371,29 @@ def profile(request):
 
     if request.user.is_authenticated:
         user_id = request.user.id
-        if request.method == 'POST':
+        if request.method == 'POST' :
             name = request.POST.get('name')
             user = User.objects.get(pk=user_id)
             updateprofile = UserProfile.objects.get(user=user)
-            if request.FILES['avatar']:
+
+           
+
+        
+
+            if bool(request.FILES.get('avatar', False)) == True:
+                print('-------')
+
                 myfile = request.FILES['avatar']
                 fs = FileSystemStorage(location='media/imgs/avatars/')
                 filename = fs.save(myfile.name, myfile)
                 avatar = '/imgs/avatars/' + str(filename)
                 updateprofile.avatar = avatar
                 updateprofile.save()
+      
             try:
                 updateprofile.name = name
                 updateprofile.save()
-                return redirect('profile',user_id)
+                return redirect('profile')
             except:
                 return HttpResponse('Lỗi!')
         return render(request, 'profile.html', context)
@@ -408,12 +419,25 @@ def alldoctors(request):
     return render(request, 'alldoctors.html', context)
 
 def department(request, department_id):
+    
     try:
         department = Department.objects.get(pk=department_id)
-        context = {'page_title': department.name, 'department':department}
+        doctors = Manager.objects.all().filter(department=department)
+        
+        manager = doctors.filter(role='Trưởng khoa')
+        educations = Education.objects.all()
+  
+        context = {'page_title': department.name, 'department':department, 'manager': manager[0].doctor, 'doctors': doctors,'educations': educations}
         return render(request, 'department.html', context)
+
+
     except Department.DoesNotExist:
         raise Http404("Question does not exist")
+
+def ask(request, ask_id):
+    context = {}
+
+    return render(request, 'ask.html', context)
    
 
 

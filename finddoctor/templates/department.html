@@ -2,4 +2,87 @@
 
 {%block content%}
 
+<div class="container">
+    <div class="card mt-4 borderradius15 shadow-sm border" >
+        <img src="/media/{{ department.avatar }}" class="card-img-top bordertopradius15" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ department.name }}</h5>
+          Trưởng khoa <a href="{% url 'doctor' manager.id %}"> Bác Sĩ {{ manager.name }}</a> 
+<hr>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      
+        </div>
+      </div>
+
+      <h5 class="mt-5"><i class="fas fa-user-md mr-3"></i>Bác sĩ {{ department.name }}</h5>
+      <hr>
+
+      {% for doctor in doctors %}
+  
+
+          <!-- bác sĩ -->
+
+ 
+
+    <a href="/doctor/{{ doctor.id }}" class="text-decoration-none text-reset">
+        <div class="card border  shadow-sm  borderradius15 py-0 mb-3 mt-4" >
+          <div class="row no-gutters  py-3">
+            <div class="col-4 col-md-1 d-flex  align-items-center px-2 ">
+             
+              <img src="/media/{{ doctor.doctor.avatar}}" class="card-img rounded-circle" alt=" {{ doctor.doctor.name }}">
+            </div>
+            <div class="col-8  col-md-11 ">
+              <div class="card-body py-0  pl-1 pr-2  ">
+         
+                <h5 class="card-title m-0">{{ doctor.doctor.name }}
+                 </h5>
+                 <small class="text-muted"><i class="fas fa-graduation-cap mr-1"></i>
+
+
+
+                  {% for education in educations %}
+
+
+
+                {% if doctor.id == education.doctor.id %}
+
+
+                {% if education.main == True %}
+                  {{education.title}}
+
+                  {% endif %}
+
+                {{ education.doctor.title }}
+
+                {% endif %}
+
+                  {% endfor %}
+
+                </small>
+                 
+                 
+    
+                 <hr class=" mt-2 mb-1 ">
+             
+    <span class="text-muted "> 
+    
+      {{ doctor.doctor.highlight }}
+    
+    
+      
+      </span>
+            </div>
+            </div>
+    
+            
+          </div>
+    
+        </div>
+      </a>
+
+
+
+      {% endfor %}
+</div>
+
 {% endblock %}

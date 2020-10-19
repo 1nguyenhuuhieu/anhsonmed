@@ -11,7 +11,7 @@
   <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
     {% if user.userprofile.avatar %}
-    <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px;">
+    <img src="/media/{{ user.userprofile.avatar }}" alt="" class="img-fluid rounded-circle" style="width: 35px; height: 35px;">
     {% else %}
     <img src="/media/imgs/noavatar.jpg" alt="" class="img-fluid rounded-circle shadow-sm" style="width: 35px;">
 
@@ -21,7 +21,7 @@
 
   </a>
   <div class="dropdown-menu dropdown-menu-right">
-    <span class="dropdown-item" type="button">Xin chào {{ user.username }}</span>
+    <span class="dropdown-item">Xin chào {{ user.username }}</span>
     <div class="dropdown-divider"></div>
     <a href='{% url "appointment" %}' class="dropdown-item text-dark"  ><i class="far fa-calendar-check  " style="width: 30px;"></i>Lịch khám</a>
 

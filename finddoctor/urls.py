@@ -31,6 +31,8 @@ urlpatterns = [
     path('mycomment/',views.mycomment, name='mycomment'),
     path('alldoctors/',views.alldoctors, name='alldoctors'),
     path('department/<int:department_id>',views.department, name='department'),
+    #Ask Doctor
+    path('ask/<int:ask_id>',views.ask, name='ask'),
 
 
      
