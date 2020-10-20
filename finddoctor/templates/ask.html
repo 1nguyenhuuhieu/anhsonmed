@@ -4,57 +4,155 @@
 
 <div class="container">
 
-    <div class="row mt-4 no-gutters">
-        <div class="col-2"> <img src="/media/{{ ask.user.userprofile.avatar}}" alt="" class="img-fluid rounded-circle"></div>
-        <div class="col-10 pl-4">
+    <div class="row mt-4 no-gutters borderradius10 border shadow-sm p-3">
+        <div class="col-2 col-md-1"> 
+          <img src="/media/{{ ask.user.userprofile.avatar}}" alt="" class="img-fluid rounded-circle">
+        </div>
+        <div class="col-10 col-md-11 pl-4">
             <h5>{{ ask.user.userprofile.name}}</h5>
-            Đăng vào {{ ask.created }}
+
+      <a href="tel:{{ask.user.username}}"><i class="fas fa-mobile-alt mr-2"></i>{{ ask.user.username}}</a>      
+
         </div>
     </div>
-    <hr>
-    {% if ask.isanswer == True %}
+    <p class="text-right font-weight-italic mt-2"> <small> Đăng ngày {{ ask.created }}</small>   
+    </p>
+
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+    <img src="/media/{{ ask.photo}}" alt="" class="img-fluid border rounded shadow-sm mb-3">
+    <p>{{ask.ask}}</p>
+
+    {% if answer %}
     <p class="text-success"> <i class="fas fa-check-circle mr-2"></i>Có {{ answer|length}} câu  trả lời</p>
 
    
     {% else %}
     <p class="text-danger"><i class="fas fa-times-circle mr-2"></i>Câu hỏi này chưa được trả lời</p>
     {% endif %}
-    <img src="/media/{{ ask.photo}}" alt="" class="img-fluid border rounded shadow-sm mb-3">
 
-    <p>{{ask.ask}}</p>
+    <hr>
+    <button class="btn btn-success  w-100" data-toggle="modal" data-target="#exampleModal" ><i class="fas fa-reply mr-2"></i>Trả lời câu hỏi này</button>
+
+
+    {% if request.user.is_authenticated %}
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header bg-success">
+          <h5 class="modal-title" id="exampleModalLabel10"><i class="fas fa-comment-medical mr-2 "></i>Trả lời câu hỏi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST"  enctype="multipart/form-data" class="mt-3">
+            {% csrf_token %}
+  
+  
+  
+  
+  
+  
+  
+            <div class="form-group">
+              <label for="exampleInputPassword1">Câu trả lời của bạn</label>
+              <textarea class="form-control" id="exampleInputPassword1" name='answer'  required rows='5'></textarea>
+            </div>
+  
+  
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-outline-dark mr-2" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+    <button type="submit" class="btn btn-success "><i class="fas fa-paper-plane mr-2"></i>Gửi câu trả lời</button>
+  
+  </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  {% else %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content ">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Bạn cần đăng nhập để trả lời câu hỏi
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+          <a href="{% url 'login' %}"  class="btn btn-outline-dark">Đăng Nhập</a>
+          <a href="{% url 'register' %}"  class="btn btn-success">Đăng Ký</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+
+    <hr>
 
   
     {% for ans in answer %}
-    <hr>
-
-    <div class="row no-gutters">
-        <div class="col-2 pr-1">
+  
+    <div class="row no-gutters  mb-4 mt-4 ">
+        <div class="col-2  pr-1 ">
       
           <img src="/media/{{ ans.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
     
           
         </div>
-        <div class="col-10 pl-2">
-            <h5> {{ ans.user.userprofile.name}}
-                <br> <small class="text-success"><i class="fas fa-check-circle mr-2"></i>Nhân viên Trung Tâm Y Tế Anh Sơn</small>
+        <div class="col-10  pl-2 ">
+            <h5> {{ ans.user.userprofile.name}} 
+                {% if ans.user.userprofile.isstaff == True %}
+                <span class="text-success"><i class="fas fa-check-circle ml-2"></i></span>
+                
+                <br> <small class="text-success">Trung Tâm Y Tế Anh Sơn</small>
+                {% endif %}
 
- 
-             <br> <small class="text-muted">Đăng ngày {{ ans.created }}</small> 
             </h5>
          
-    <hr>
+         
+    <hr class="mt-1 mb-2">
       
-        <p>  {{ ans.answer}}</p>
+        <p class="m-0">  {{ ans.answer}}</p>
 
      
-    
+    <small class="text-muted">Đăng ngày {{ ans.created }}</small> 
+
     
       
     
       
         </div>
       </div>
+      
+      {% if forloop.last %}
+      {% else %}
+      <hr>
+      {% endif %}
       {% endfor %}
+
+
+      </div>
+    </div>
+
+
+  
+
+
     
 
 </div>

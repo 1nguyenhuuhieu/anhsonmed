@@ -48,14 +48,32 @@ def index(request):
     top_doctors_education = Education.objects.all().filter(doctor_id__in=top_doctors_list_id).filter(main=True)
 
     asks = AskDoctor.objects.all().order_by('-pk')[:5]
+    answer = Answer.objects.all().filter(ask__in=asks)
     
     context.update({'top_doctors_list': top_doctors_list,
                 'doctor_names':doctor_names,
                 'top_doctors_education':  top_doctors_education,
                 'page_title': "Home",
                 'top_departments_list':  top_departments_list,
-                'asks': asks
+                'asks': asks,
+                'answer': answer
     })
+    if request.method == 'POST':
+            ask = request.POST.get('ask')
+            user = User.objects.get(pk = request.user.id)
+            photo = None
+            
+            if bool(request.FILES.get('photo', False)) == True:
+
+                    myfile = request.FILES['photo']
+                    fs = FileSystemStorage(location='media/imgs/asks/')
+                    filename = fs.save(myfile.name, myfile)
+                    photo = '/imgs/asks/' + str(filename)
+
+            newask = AskDoctor(ask=ask, user=user, photo = photo)
+            newask.save()
+            return redirect('home')
+
     return render(request,'index.html', context)
 
 
@@ -135,9 +153,11 @@ def doctor(request, doctor_id):
                 
                 }
     )
-
-    directori = Directorate.objects.all().get(doctor=doctor)
-    context.update({'directori': directori})
+    try:
+        directori = Directorate.objects.all().get(doctor=doctor)
+        context.update({'directori': directori})
+    except:
+        pass
     return render(request,'doctor.html',context)
 
  
@@ -214,7 +234,7 @@ def register(request):
             user = authenticate(username = phone, password = password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect ('profile')
         except:
        # raise exception or error message
             return HttpResponse('<h1>Không thành công. Tài khoản này đã tồn tại</h1>')
@@ -406,25 +426,51 @@ def department(request, department_id):
         
         manager = doctors.filter(role='Trưởng khoa')
         educations = Education.objects.all()
+        context = {'page_title': department.name, 'department':department, 'doctors': doctors,'educations': educations}
+
+        if manager:
+            managername = manager[0].doctor
+            context.update({'manager': managername})
+
   
-        context = {'page_title': department.name, 'department':department, 'manager': manager[0].doctor, 'doctors': doctors,'educations': educations}
+
         return render(request, 'department.html', context)
 
 
     except Department.DoesNotExist:
-        raise Http404("Question does not exist")
+        return redirect('page404')
 
 def ask(request, ask_id):
-    context = {'page_title': 'Hỏi bác sĩ'}
+    context = {'page_title': 'Hỏi bác sĩ','page_navbar': 'green'}
     try:
         ask = AskDoctor.objects.get(pk=ask_id)
         answer = Answer.objects.all().filter(ask=ask)
    
         context.update({'ask': ask,'answer':answer})
-    except:
-        raise Http404("Question does not exist")
 
-    return render(request, 'ask.html', context)
+        if request.method == 'POST':
+            answer = request.POST.get('answer')
+            user = User.objects.get(pk = request.user.id)
+            newanswer = Answer(ask=ask, user=user, answer=answer)
+            newanswer.save()
+            ask.isanswer = True
+            ask.save()
+            return redirect('ask',ask_id)
+
+            # if bool(request.FILES.get('photo', False)) == True:
+
+            #         myfile = request.FILES['photo']
+            #         fs = FileSystemStorage(location='media/imgs/asks/')
+            #         filename = fs.save(myfile.name, myfile)
+            #         photo = '/imgs/asks/' + str(filename)
+        else:
+            return render(request, 'ask.html', context)
+
+    except:
+        return redirect('page404')
+
+def page404(request):
+    return render(request,'404.html')
    
 
 

@@ -5,9 +5,95 @@
     <h4 class="text-center"><i class="fas fa-comment-medical mr-2 "></i>Hỏi bác sĩ</h4>
     <hr>
 
+    {% if request.user.is_authenticated %}
+    <div class="text-center">
+    <!-- Button trigger modal -->
+
+<button class="btn btn-dark w-100   borderradius10" data-toggle="modal" data-target="#exampleModal10">Đặt câu hỏi</button>
+
+    </div>
 
 
-<div class="my-3 p-3 bg-white borderradius20 border shadow-sm">
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title" id="exampleModalLabel10"><i class="fas fa-comment-medical mr-2 "></i>Hỏi bác sĩ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST"  enctype="multipart/form-data" class="mt-3">
+          {% csrf_token %}
+
+
+          <div class="form-group">
+            <label for="exampleFormControlFile1">Ảnh liên quan</label>
+            <input type="file" class="form-control-file" id="avatar" name='photo' >
+          </div>
+
+
+
+
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Câu hỏi của bạn</label>
+            <textarea class="form-control" id="exampleInputPassword1" name='ask'  required rows='3'></textarea>
+          </div>
+
+
+<div class="d-flex justify-content-end">
+  <button type="button" class="btn btn-outline-dark mr-2" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+  <button type="submit" class="btn btn-success "><i class="fas fa-paper-plane mr-2"></i>Gửi câu hỏi</button>
+
+</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div class="text-center">
+  <!-- Button trigger modal -->
+
+<button class="btn btn-dark w-100  borderradius10" data-toggle="modal" data-target="#exampleModal11">Đặt câu hỏi</button>
+
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content ">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn cần đăng nhập để gửi câu hỏi
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times mr-2"></i>Huỷ</button>
+        <a href="{% url 'login' %}"  class="btn btn-outline-dark">Đăng Nhập</a>
+        <a href="{% url 'register' %}"  class="btn btn-success">Đăng Ký</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+
+<div class="mt-4 mb-3 p-3 bg-white borderradius20 border shadow-sm">
 
   {% for ask in asks %}
 
@@ -25,20 +111,37 @@
       {% endif %}
 
 
-      <p class="media-body pb-3 mb-0 small lh-125 border-gray">
-        <strong class="d-block text-gray-dark">@
+      <p class="media-body pb-1 mb-0 small lh-125 border-gray">
+        <strong class="d-block text-gray-dark mb-1">@
        {% if ask.user.userprofile.name %}
             {{ask.user.userprofile.name}} 
             {% else %}
             {{ ask.user.username}}
           {% endif %}
+ <span class="font-weight-normal "> ngày {{ask.created}} </span> 
+ 
+
         </strong>
-       
-        {{ask.ask}}
+     
+      
+        
+       {{ask.ask}}
      
       </p>
-    
+      
+
+
     </div>
+
+    {% if ask.isanswer == True %}
+
+    <p class="text-right"><small class="badge badge-success ">Đã trả lời</small></p>
+    {% else %}
+<p class="text-right"><small class="badge badge-danger ">Chưa có câu trả lời</small></p>
+    {% endif %}
+  
+
+
   </a>
     <!-- end ask -->
 

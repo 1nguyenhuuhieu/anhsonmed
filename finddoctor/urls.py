@@ -34,6 +34,9 @@ urlpatterns = [
     #Ask Doctor
     path('ask/<int:ask_id>',views.ask, name='ask'),
 
+    #404 page
+    path('404/', views.page404, name = 'page404')
+
 
      
 ]

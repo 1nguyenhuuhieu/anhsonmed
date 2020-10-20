@@ -89,6 +89,7 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=200,null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
     avatar = models.ImageField(upload_to = 'imgs/avatars/',null=True, blank=True )
+    isstaff = models.BooleanField(null=True, blank=True, default=False)
     def __str__(self):
         return  str(self.user)
 
@@ -146,7 +147,7 @@ class AskDoctor(models.Model):
     ask = models.TextField(max_length=1000, null=True, blank=True)
     created = models.DateField(null=True, blank=True, auto_now_add=True)
     photo = models.ImageField(upload_to = 'imgs/asks/', null= True, blank = True)
-    isanswer = models.BooleanField(null=True,blank=True,default=False)
+    isanswer = models.BooleanField(default=False, null=True, blank=True)
     def __str__(self):
         return self.ask
 
