@@ -3,6 +3,10 @@
 
     <h5 class="mt-4">{{doctor.name}}
       <br>
+      {% if directori %}
+      <small class="text-muted"> {{ directori.role }} </small>
+      <br>
+      {% endif %}
       <small class="text-muted"> {{ doctor.highlight }}</small>
     </h5>
       <hr class="w-50">

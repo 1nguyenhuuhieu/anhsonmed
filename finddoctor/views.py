@@ -120,6 +120,7 @@ def doctor(request, doctor_id):
     fivepoint = comments.filter(stars=5).count()
 
     speciallist = Specialist.objects.all().filter(doctor=doctor)
+    
     manager = Manager.objects.all().filter(doctor=doctor)
 
   
@@ -145,6 +146,9 @@ def doctor(request, doctor_id):
                 
                 }
     )
+
+    directori = Directorate.objects.all().get(doctor=doctor)
+    context.update({'directori': directori})
     return render(request,'doctor.html',context)
 
  

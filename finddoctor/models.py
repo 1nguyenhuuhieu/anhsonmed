@@ -52,13 +52,13 @@ class Manager(models.Model):
 class Directorate(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     role_list = (
-        ('GĐ', 'Giám Đốc'),
-        ('PGĐ', 'Phó Giám Đốc'),
+        ('Giám Đốc', 'Giám Đốc'),
+        ('Phó Giám Đốc', 'Phó Giám Đốc'),
     )
     role = models.CharField(max_length=200, choices=role_list)
 
     def __str__(self):
-        return self.doctor + self.role
+        return str(self.doctor) + str(self.role)
 
 
 class Specialist(models.Model):
@@ -162,10 +162,12 @@ class AskDoctor(models.Model):
     created = models.DateField(null=True, blank=True, auto_now_add=True)
     photo = models.ImageField(upload_to = 'imgs/asks/', null= True, blank = True)
     isanswer = models.BooleanField(null=True,blank=True,default=False)
+    def __str__(self):
+        return self.ask
 
 
 class Answer(models.Model):
     ask = models.ForeignKey(AskDoctor, on_delete=models.CASCADE, null=True, blank=True)
     answer = models.TextField(max_length=1000, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    created     = models.DateTimeField(editable=False,null=True, blank=True, auto_now_add=True)
+    created     = models.DateField(editable=False,null=True, blank=True, auto_now_add=True)

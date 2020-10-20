@@ -13,36 +13,40 @@
     </div>
     <hr>
     {% if ask.isanswer == True %}
-    <p class="text-success"> <i class="fas fa-check-circle mr-2"></i>Trả lời bởi bác sĩ xxxx ngày xxx</p>
+    <p class="text-success"> <i class="fas fa-check-circle mr-2"></i>Có {{ answer|length}} câu  trả lời</p>
 
    
     {% else %}
     <p class="text-danger"><i class="fas fa-times-circle mr-2"></i>Câu hỏi này chưa được trả lời</p>
     {% endif %}
-    <hr>
     <img src="/media/{{ ask.photo}}" alt="" class="img-fluid border rounded shadow-sm mb-3">
 
     <p>{{ask.ask}}</p>
 
+  
+    {% for ans in answer %}
     <hr>
-
 
     <div class="row no-gutters">
         <div class="col-2 pr-1">
       
-          <img src="/media/imgs/noavatar.jpg" class="img-fluid rounded-circle" alt="">
+          <img src="/media/{{ ans.user.userprofile.avatar }}" class="img-fluid rounded-circle" alt="">
     
           
         </div>
         <div class="col-10 pl-2">
+            <h5> {{ ans.user.userprofile.name}}
+                <br> <small class="text-success"><i class="fas fa-check-circle mr-2"></i>Nhân viên Trung Tâm Y Tế Anh Sơn</small>
 
  
-              <small class="text-muted">Đăng ngày {{ answer.created }}</small> 
+             <br> <small class="text-muted">Đăng ngày {{ ans.created }}</small> 
+            </h5>
          
     <hr>
-        
-        <p>  {{ answer.answer}}</p>
-    
+      
+        <p>  {{ ans.answer}}</p>
+
+     
     
     
       
@@ -50,7 +54,8 @@
       
         </div>
       </div>
-
+      {% endfor %}
+    
 
 </div>
 {% endblock %}
