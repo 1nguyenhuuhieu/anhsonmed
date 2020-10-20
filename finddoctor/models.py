@@ -3,26 +3,16 @@ from django.contrib.auth.models import User
 import random
 from django.utils import timezone
 
-# Create your models here.
 
+# Doctor Model
 class Doctor(models.Model):
     name = models.CharField(max_length=200)
     avatar = models.ImageField(upload_to = 'imgs/avatars/',null=True, blank=True)
-
     showinhome = models.BooleanField(default=False, help_text="Có xuất hiện ở mục bác sĩ nổi bật tại trang chủ")
-
     phone = models.IntegerField(null=True, blank=True)
-   
-
-
-    
     birth_of_date = models.DateField()
     description = models.TextField(null=True, blank=True)
-
     highlight = models.CharField(max_length=200, null=True, blank=True )
-
-  
-
     def __str__(self):
         return self.name
 
@@ -109,17 +99,13 @@ class BookApartment(models.Model):
     description = models.TextField(max_length=500,null=True, blank=True)
     time = models.CharField(max_length=20,null=True, blank=True)
     date = models.CharField(max_length=200,null=True, blank=True)
-   
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
-
-   
     choice_list = (
         ('Đang chờ khám', 'Đang chờ khám'),
         ('Đã khám xong', 'Đã khám xong'),
         ('Đã huỷ', 'Đã huỷ'),
     )
     isdone = models.CharField(max_length=300 ,choices=choice_list,default= 'Đang chờ khám',null=True, blank=True)
-   
     def __str__(self):
         return str(self.user)+ '---' + str(self.time)+  '---' + str(self.date)
 
@@ -128,9 +114,8 @@ class ReviewDoctor(models.Model):
     stars = models.IntegerField(null=True, blank=True)
     comment = models.TextField(max_length=500,null=True, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-
-    created     = models.DateTimeField(editable=False,null=True, blank=True, auto_now_add=True)
-    modified    = models.DateTimeField(null=True, blank=True)
+    created = models.DateTimeField(editable=False,null=True, blank=True, auto_now_add=True)
+    modified = models.DateTimeField(null=True, blank=True)
     verify = models.BooleanField(default=False)
 
 

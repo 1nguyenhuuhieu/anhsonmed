@@ -61,12 +61,9 @@ def index(request):
 
 def doctor(request, doctor_id):
     verify_code = 0
-    
     doctor = Doctor.objects.get(pk=doctor_id)
-
     countappointmentdone = BookApartment.objects.all().filter(doctor=doctor).filter(isdone='Đã khám xong').count()
     context = {'countappointmentdone': countappointmentdone}
-
     if request.user.is_authenticated:
             verify_code = 0
             user = User.objects.get(pk = request.user.id)
@@ -77,8 +74,6 @@ def doctor(request, doctor_id):
                 verify_code = otplist[0].vertify_code
                 context.update({
                 'verify_code':verify_code,}) 
-        
-
     if request.method == 'POST':
         verify = False
         points = request.POST.get('points')
@@ -87,18 +82,12 @@ def doctor(request, doctor_id):
         comment = request.POST.get('comment')
         user = User.objects.get(pk = request.user.id)
         if verify_code != 0:
-    
             if verify_code == int(request.POST.get('otp')):
-
                     verify = True
                     VerifyCode.objects.filter(vertify_code=verify_code).delete()
-                 
-       
         newreview = ReviewDoctor(user = user, stars = points, comment=comment, doctor=doctor , verify= verify)
         newreview.save()
-    
         return redirect('doctor', doctor_id)
-
     educations = Education.objects.all().filter(doctor_id = doctor_id)
     comments = ReviewDoctor.objects.all().filter(doctor_id = doctor_id)
     allcomments =  comments.count()
@@ -120,7 +109,7 @@ def doctor(request, doctor_id):
     fivepoint = comments.filter(stars=5).count()
 
     speciallist = Specialist.objects.all().filter(doctor=doctor)
-    
+
     manager = Manager.objects.all().filter(doctor=doctor)
 
   
@@ -239,11 +228,7 @@ def register(request):
     return render(request, 'register.html', context)
 
 def bookappointment(request, doctor_id):
-    
     doctor = Doctor.objects.get(pk=doctor_id)
-
-   
-    
     context = {'doctor': doctor,'page_title': doctor.name ,'page_navbar': 'green'}
     if request.method == 'POST':
         ordername = request.POST.get('ordername')
@@ -254,23 +239,14 @@ def bookappointment(request, doctor_id):
         user = User.objects.get(pk = request.user.id)
         newbook = BookApartment(ordername=ordername, orderphone=orderphone, description=description,time=time, date=date, user=user, doctor=doctor)
         newbook.save()
-
         rannumber = random.randint(100000,999999)
         newappointment = AppointMent(user=user, bookapartment=BookApartment.objects.latest('id'), doctor = doctor)
-
         newappointment.save()
-
-        rannumber = random.randint(100000,999999)
         verify = VerifyCode(appointment=newappointment,vertify_code=rannumber)
         verify.save()
-
-
         orderinfo = BookApartment.objects.latest('id')
         context.update({'orderinfo': orderinfo})
-
         return redirect('bookappointmentsuccess')
-
-        # return render(request, 'bookappointmentsuccess.html', context  )
     return render(request, 'bookappointment.html', context)
 
 def bookappointmenthome(request):
