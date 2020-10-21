@@ -47,7 +47,7 @@ def index(request):
         top_doctors_list_id.append(i.id)
     top_doctors_education = Education.objects.all().filter(doctor_id__in=top_doctors_list_id).filter(main=True)
 
-    asks = AskDoctor.objects.all().order_by('-pk')[:5]
+    asks = AskDoctor.objects.all().order_by('-pk')[:3]
     answer = Answer.objects.all().filter(ask__in=asks)
     
     context.update({'top_doctors_list': top_doctors_list,
