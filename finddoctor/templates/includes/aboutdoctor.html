@@ -12,7 +12,17 @@
       <hr class="w-50">
       {% if countappointmentdone %}
 
-      <p class="text-success mb-2"><i class="fas fa-calendar-check mr-2"></i> {{countappointmentdone}} đăng ký khám thành công</p>
+      <p class="text-dark mb-2"> <span class="font-weight-bold">{{countappointmentdone}} </span> Lịch khám thành công</p>
+      {% endif %}
+
+      <!-- trả lời hỏi bác sĩ -->
+    
+   {% if user.userprofile.doctor %}
+   {{ user.userprofile.doctor.id }}
+   {% endif %}
+
+   {% if countanswer %}
+      <p class="text-dark mb-2"> <span class="font-weight-bold">{{countanswer}}</span>  Câu trả lời</p>
       {% endif %}
   <small class="text-warning">
     

@@ -158,6 +158,13 @@ def doctor(request, doctor_id):
         context.update({'directori': directori})
     except:
         pass
+
+    if doctor.user:
+        user = doctor.user
+        countanswer = Answer.objects.all().filter(user=user).count()
+        context.update({'countanswer': countanswer})
+
+   
     return render(request,'doctor.html',context)
 
  
@@ -506,3 +513,13 @@ def about(request):
     context = {'page_title':'About'}
 
     return render(request, 'staticpage/about.html', context)
+
+def myasks(request):
+    context = {'page_title': 'Danh sách câu hỏi'}
+    try:
+        user = User.objects.get(pk = request.user.id )
+        asks = AskDoctor.objects.all().filter(user = user).order_by('-pk')
+        context.update({'asks': asks})
+    except:
+        return redirect('page404')
+    return render(request, 'myasks.html', context)

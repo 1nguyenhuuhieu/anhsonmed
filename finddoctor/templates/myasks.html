@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+
+    <div class="container py-5">
+        <h5><i class="fas fa-comment-medical mr-3"></i>Danh sách câu hỏi</h5>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+
+                {% for ask in asks %}
+<a href="{% url 'ask' ask.id %}" class="text-reset text-decoration-none">
+                <div class="card  border shadow-sm mb-4 mt-1">
+                    <div class="card-header">
+                      {% if ask.isanswer == False %}
+                  <span class="text-danger">    <i class="far fa-times-circle mr-2"></i>Chưa có câu trả lời </span>
+                      {% else %}
+                  <span class="text-success">    <i class="far fa-check-circle mr-2"></i>Đã được trả lời </span>
+
+                      {% endif %}
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text">{{ ask.ask }}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                     {{ ask.created }}
+                    </div>
+                  </div>
+                </a>
+          {% endfor %}
+
+
+            </div>
+        </div>
+  
+    
+    </div>
+
+  
+</section>
+
+{% endblock %}

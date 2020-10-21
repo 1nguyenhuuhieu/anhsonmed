@@ -13,6 +13,8 @@ class Doctor(models.Model):
     birth_of_date = models.DateField()
     description = models.TextField(null=True, blank=True)
     highlight = models.CharField(max_length=200, null=True, blank=True )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
         return self.name
 
@@ -85,7 +87,6 @@ class Education(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200,null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
     avatar = models.ImageField(upload_to = 'imgs/avatars/',null=True, blank=True )

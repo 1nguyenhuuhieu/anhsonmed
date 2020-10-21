@@ -12,7 +12,7 @@ class EducationInline(admin.StackedInline):
 class DoctorAdmin(admin.ModelAdmin):
 
     fieldsets = [
-    (None,               {'fields':  ['name', 'avatar', 'showinhome', 'birth_of_date', 'description', 'highlight','phone']}),
+    (None,               {'fields':  ['user','name', 'avatar', 'showinhome', 'birth_of_date', 'description', 'highlight','phone']}),
     ]
 
     inlines = [EducationInline]
