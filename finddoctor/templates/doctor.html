@@ -14,8 +14,8 @@
 
 
   <hr >
-  <div class="row " >
-    <div class="col-5 border-right text-center">
+  <div class="row no-gutters" >
+    <div class="col-4 border-right text-center">
       <h1 class="m-0">{{ point_avg }}</h1>
       <span class="text-warning" style="font-size: 10px;">
 
@@ -26,7 +26,7 @@
       </span>
      <br> <span class="text-muted" >{{ allcomments }} đánh giá</span>
     </div>
-    <div class="col-7 ">
+    <div class="col-5 pl-2">
 
       <p class="text-warning m-0" style="font-size: 13px;"><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-1"></i><i class="fas fa-star mr-3"></i> <span class="text-dark"> 
         {% if fivepoint %}
@@ -73,6 +73,10 @@
 
       
   
+  </div>
+
+  <div class="col-3">
+    <div class="fb-share-button" data-href="{{request.get_full_path}}" data-layout="box_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
   </div>
 </div>
 
