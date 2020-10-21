@@ -502,7 +502,7 @@ def allasks(request):
     context.update({'asks': asks, 'page_title':'Tất cả câu hỏi','countanswered':countanswered,'countnotanswered':countnotanswered})
     return render(request, 'allasks.html', context)
    
+def about(request):
+    context = {'page_navbar':'green', 'page_title':'About'}
 
-
-    
-
+    return render(request, 'staticpage/about.html', context)

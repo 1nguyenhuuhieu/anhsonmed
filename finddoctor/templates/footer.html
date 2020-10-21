@@ -1,4 +1,4 @@
-<section class=" bg-dark {% if page_title == 'Home' %} {% else %} mt-5{% endif %}">
+<section class=" bg-dark">
     <div class="container  py-5  text-secondary">
 
         <div class="row justify-content-center">
@@ -7,7 +7,7 @@
          <p>
            
           <a href="/about" class="text-white-50">Tra Cứu <span class="text-success">Bác Sĩ</span> </a>
-          is a project created and maintained by  <a href="http://davidmiller.io" class="text-white-50">  Nguyễn Hữu Hiếu</a> with <i class="fas fa-heart text-danger" aria-hidden="true"></i>
+          is a project created and maintained by  <a href="mailto: 1nguyenhuuhieu@gmail.com" class="text-white-50">  Nguyễn Hữu Hiếu</a> with <i class="fas fa-heart text-danger" aria-hidden="true"></i>
        
          </p>
 <p>
@@ -20,7 +20,7 @@
 
         <hr>
         <ul class="list-group list-group-horizontal ">
-          <a href="#" class="list-group-item py-2 px-0 bg-dark pr-3 border-0 text-success"><small>About</small>  </a>
+          <a href="{% url 'about' %}" class="list-group-item py-2 px-0 bg-dark pr-3 border-0 text-success"><small>About</small>  </a>
           <a href="#" class="list-group-item py-2  px-0 bg-dark pr-3 border-0 text-success"><small>Terms of Service</small>  </a>
           <a href="#" class="list-group-item py-2  px-0 bg-dark border-0 text-success"><small>Help to improve this page</small>  </a>
         </ul>

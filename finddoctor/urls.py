@@ -44,6 +44,9 @@ urlpatterns = [
     #All Asks
     path('allasks/', views.allasks, name = 'allasks'),
 
+    #About
+    path('about/', views.about, name = 'about'),
+
 
      
 ]

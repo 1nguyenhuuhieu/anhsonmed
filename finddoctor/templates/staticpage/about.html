@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<section class="mt-4">
+    <div class="container">
+        <div class="row no-gutters border py-2 px-3 rainbow borderradius15 border shadow">
+            <div class="col-3 col-md-1 d-flex align-items-center "> <img class="img-fluid   bg-light p-1 rounded-circle" src="{% static 'finddoctor/imgs/logo.png' %}" alt=""></div>
+            <div class="col-9 col-md-11 pl-3 d-flex align-items-center"> 
+                <div>
+                   
+                    <p class="lead m-0 " style="text-align: justify;"> <span class="font-weight-bold">  Tra Cứu <span class="text-success">Bác Sĩ</span></span>  là dự án mã nguồn mở được tạo ra và duy trì, phát triển bởi <a href="mailto:1nguyenhuuhieu@gmail.com">Nguyễn Hữu Hiếu.</a> </p>
+
+                </div>
+             
+            </div>
+        </div>
+       
+        <div class="card mt-4 mb-4 border border-success borderradius15 shadow-sm p-2" >
+            <div class="card-body">
+              <h5 class="card-title text-success"><i class="fas fa-hand-holding-medical mr-3"></i>Mạng xã hội về y tế</h5>
+              <hr class="mb-2 mt-1">
+              <p class="card-text text-muted lead" style="text-align: justify;">Nơi mọi người dễ dàng kết nối nhanh chóng với các bác sĩ để hỏi đáp về sức khoẻ một cách chính xác. Đặt lịch khám trực tuyến.</p>
+           
+            </div>
+          </div>
+
+
+          <div class="card mt-4 mb-4 border border-primary borderradius15 shadow-sm p-2" >
+            <div class="card-body">
+              <h5 class="card-title text-primary"><i class="fas fa-piggy-bank mr-3"></i>Miễn phí trọn đời</h5>
+              <p class="card-text text-muted lead" style="text-align: justify;">Source Code và tài liệu của dự án có sẵn tại <a href="">GitHub</a>. Tất cả mọi người đều có quyền truy cập và sử dụng với mục đích phi thương mại.</p>
+           
+            </div>
+          </div>
+
+
+          
+          <div class="card mt-4 mb-5 border border-info borderradius15 shadow-sm p-2" >
+            <div class="card-body">
+              <h5 class="card-title text-info"><i class="fas fa-code mr-3"></i>Nền tảng</h5>
+              <p class="card-text text-muted lead">
+                  - Database <a href="#">  PostgreSQL</a> <br> - Back-end <a href="https://www.djangoproject.com/">Django</a> <br>    - Front-end <a href="#">Bootstraps</a> & <a href="">jQuery</a>  <br>- Coded with <a href="">Visual Studio Code</a> <br> - Hosted on <a href="">Heroku</a></p>
+           
+            </div>
+          </div>
+
+
+
+
+                
+      
+
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
