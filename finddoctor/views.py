@@ -421,7 +421,7 @@ def alldoctors(request):
 def department(request, department_id):
     
     try:
-        department = Department.objects.get(pk=department_id)
+        department = Department.objects.get(pk=department_id)[:6]
         doctors = Manager.objects.all().filter(department=department)
         
         manager = doctors.filter(role='Trưởng khoa')
