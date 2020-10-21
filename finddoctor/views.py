@@ -503,6 +503,6 @@ def allasks(request):
     return render(request, 'allasks.html', context)
    
 def about(request):
-    context = {'page_navbar':'green', 'page_title':'About'}
+    context = {'page_title':'About'}
 
     return render(request, 'staticpage/about.html', context)
