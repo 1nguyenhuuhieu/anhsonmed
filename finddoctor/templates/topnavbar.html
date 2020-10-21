@@ -3,7 +3,7 @@
 
 {% if page_navbar == 'green' %}
 
-<nav class="navbar  navbar-dark bg-success shadow-sm py-0 sticky-top">
+<nav class="navbar  navbar-dark bg-success shadow-sm py-0 py-md-2 sticky-top">
   {% if doctor %}
   <a class="navbar-brand " href="{% url 'doctor' doctor.id %}" >
 
@@ -28,7 +28,7 @@
 </nav>
 
 {% else %}
-      <nav class="navbar  navbar-light bg-light shadow-sm  py-0 sticky-top d-flex justify-content-between">
+      <nav class="navbar  navbar-light bg-light shadow-sm  py-0 py-md-2 sticky-top d-flex justify-content-between">
 
 
           <button class="navbar-toggler border-0 p-0 m-0 " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,31 +56,22 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item  {%if  request.resolver_match.view_name == 'home' %} active {% endif %}">
+              <a class="nav-link" href="{% url 'home' %}">Trang chủ  </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+
+            <li class="nav-item  {%if  request.resolver_match.view_name == 'alldoctors' %} active {% endif %}">
+              <a class="nav-link " href="{% url 'alldoctors' %}">Bác sĩ </a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+
+            <li class="nav-item  {%if  request.resolver_match.view_name == 'alldepartments' %} active {% endif %}">
+              <a class="nav-link " href="{% url 'alldepartments' %}">Chuyên khoa </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li class="nav-item  {%if  request.resolver_match.view_name == 'allasks' %} active {% endif %}">
+              <a class="nav-link " href="{% url 'allasks' %}">Hỏi bác sĩ </a>
             </li>
+
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
         </div>
       </nav>
       

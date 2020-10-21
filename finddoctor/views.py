@@ -53,7 +53,7 @@ def index(request):
     context.update({'top_doctors_list': top_doctors_list,
                 'doctor_names':doctor_names,
                 'top_doctors_education':  top_doctors_education,
-                'page_title': "Home",
+                'page_title': "Trang chủ",
                 'top_departments_list':  top_departments_list,
                 'asks': asks,
                 'answer': answer

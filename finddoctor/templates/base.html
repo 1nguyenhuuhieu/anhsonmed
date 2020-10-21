@@ -24,6 +24,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'finddoctor/imgs/favicon/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'finddoctor/imgs/favicon/site.webmanifest' %}">
 
+    {% include 'includes/facebookmeta.html' %}
+
 
 
 
@@ -31,7 +33,7 @@
     
   </head>
 
-  <body>
+  <body class="bg-light">
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=1601195036752000&autoLogAppEvents=1" nonce="JeBjWCyU"></script>
     {% include 'topnavbar.html' %}
