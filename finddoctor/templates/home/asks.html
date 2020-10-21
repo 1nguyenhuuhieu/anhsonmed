@@ -3,15 +3,14 @@
   <div class="container">
   
     <h4 class="text-center"><i class="fas fa-comment-medical mr-2 "></i>Hỏi bác sĩ</h4>
+    
     <hr>
 
+  
+
     {% if request.user.is_authenticated %}
-    <div class="text-center">
+ 
     <!-- Button trigger modal -->
-
-<button class="btn btn-dark w-100   borderradius10" data-toggle="modal" data-target="#exampleModal10">Đặt câu hỏi</button>
-
-    </div>
 
 
 
@@ -58,18 +57,9 @@
 </div>
 
 {% else %}
-<div class="text-center">
-  <!-- Button trigger modal -->
-
-<button class="btn btn-dark w-100  borderradius10" data-toggle="modal" data-target="#exampleModal11">Đặt câu hỏi</button>
-
-  </div>
-
-
-
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content ">
       <div class="modal-header bg-danger">
@@ -158,7 +148,9 @@
 
  
   <div class="text-center mt-4">
-    <a href="#"  class="btn btn-outline-dark w-50  shadow-sm borderradius10"> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
+    
+<button class="btn btn-success mr-2  shadow-sm w-50" data-toggle="modal" data-target="#exampleModal10"><i class="fas fa-comment-medical mr-2 "></i>Đặt câu hỏi</button>
+    <a href="{% url 'allasks' %}"  class="btn btn-outline-dark   shadow-sm "> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
    </div>
    
 

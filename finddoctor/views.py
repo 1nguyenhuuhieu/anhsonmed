@@ -47,7 +47,7 @@ def index(request):
         top_doctors_list_id.append(i.id)
     top_doctors_education = Education.objects.all().filter(doctor_id__in=top_doctors_list_id).filter(main=True)
 
-    asks = AskDoctor.objects.all().order_by('-pk')[:5]
+    asks = AskDoctor.objects.all().order_by('-pk')[:3]
     answer = Answer.objects.all().filter(ask__in=asks)
     
     context.update({'top_doctors_list': top_doctors_list,
@@ -471,6 +471,36 @@ def ask(request, ask_id):
 
 def page404(request):
     return render(request,'404.html')
+
+def alldepartments(request):
+    context = {}
+    departments = Department.objects.all()
+    context.update({'top_departments_list': departments, 'page_title':'Tất cả chuyên khoa'})
+    return render(request, 'alldepartments.html', context)
+
+def allasks(request):
+    context = {}
+    asks = AskDoctor.objects.all().order_by('-pk')
+    countanswered = asks.filter(isanswer = True).count()
+    countnotanswered = asks.filter(isanswer = False).count()
+    if request.method == 'POST':
+            ask = request.POST.get('ask')
+            user = User.objects.get(pk = request.user.id)
+            photo = None
+            
+            if bool(request.FILES.get('photo', False)) == True:
+
+                    myfile = request.FILES['photo']
+                    fs = FileSystemStorage(location='media/imgs/asks/')
+                    filename = fs.save(myfile.name, myfile)
+                    photo = '/imgs/asks/' + str(filename)
+
+            newask = AskDoctor(ask=ask, user=user, photo = photo)
+            newask.save()
+            return redirect('allasks')
+    
+    context.update({'asks': asks, 'page_title':'Tất cả câu hỏi','countanswered':countanswered,'countnotanswered':countnotanswered})
+    return render(request, 'allasks.html', context)
    
 
 
