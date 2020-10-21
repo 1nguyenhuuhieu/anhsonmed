@@ -36,11 +36,14 @@
 
       </div>
 
+{% if page_title == 'Tất cả chuyên khoa' %}
+{% else %}
 
     
       <div class="text-center mt-4">
-        <a href="#"  class="btn btn-outline-dark w-50  shadow-sm "> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
+        <a href="{% url 'alldepartments' %}"  class="btn btn-outline-dark w-50  shadow-sm "> Xem tất cả <i class="fas fa-arrow-right ml-2"></i></a>
        </div>
+       {% endif %}
        
  
     </div>

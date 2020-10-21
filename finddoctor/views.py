@@ -421,7 +421,7 @@ def alldoctors(request):
 def department(request, department_id):
     
     try:
-        department = Department.objects.get(pk=department_id)[:6]
+        department = Department.objects.get(pk=department_id)
         doctors = Manager.objects.all().filter(department=department)
         
         manager = doctors.filter(role='Trưởng khoa')
@@ -471,6 +471,36 @@ def ask(request, ask_id):
 
 def page404(request):
     return render(request,'404.html')
+
+def alldepartments(request):
+    context = {}
+    departments = Department.objects.all()
+    context.update({'top_departments_list': departments, 'page_title':'Tất cả chuyên khoa'})
+    return render(request, 'alldepartments.html', context)
+
+def allasks(request):
+    context = {}
+    asks = AskDoctor.objects.all().order_by('-pk')
+    countanswered = asks.filter(isanswer = True).count()
+    countnotanswered = asks.filter(isanswer = False).count()
+    if request.method == 'POST':
+            ask = request.POST.get('ask')
+            user = User.objects.get(pk = request.user.id)
+            photo = None
+            
+            if bool(request.FILES.get('photo', False)) == True:
+
+                    myfile = request.FILES['photo']
+                    fs = FileSystemStorage(location='media/imgs/asks/')
+                    filename = fs.save(myfile.name, myfile)
+                    photo = '/imgs/asks/' + str(filename)
+
+            newask = AskDoctor(ask=ask, user=user, photo = photo)
+            newask.save()
+            return redirect('allasks')
+    
+    context.update({'asks': asks, 'page_title':'Tất cả câu hỏi','countanswered':countanswered,'countnotanswered':countnotanswered})
+    return render(request, 'allasks.html', context)
    
 
 
