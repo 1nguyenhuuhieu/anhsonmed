@@ -106,25 +106,21 @@
    
 
   </div>
+  {% if doctor.description %}
+  <hr>
+<p class="lead">
+  {{ doctor.description }}
+
+</p>
+
+  {% endif %}
   
 
 
 
   <hr>
 
-  {% if speciallist %}
-  {% for special in speciallist %}
 
-  <div class="row mb-2">
-    <div class="col-1">
-      <i class="fas fa-stethoscope"></i></div>
-    <div class="col-11"> {{ special.title }}
-    </div>
-  </div>
-
-  {% endfor %}
-
-  {% endif %}
 
 
   {% if manager %}
@@ -151,3 +147,17 @@
 
 
   {% endfor %}
+
+  {% if speciallist %}
+  {% for special in speciallist %}
+
+  <div class="row mb-2">
+    <div class="col-1">
+      <i class="fas fa-stethoscope"></i></div>
+    <div class="col-11"> {{ special.title }}
+    </div>
+  </div>
+
+  {% endfor %}
+
+  {% endif %}
