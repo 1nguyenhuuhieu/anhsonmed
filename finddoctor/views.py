@@ -37,8 +37,6 @@ def index(request):
     for i in doctors:
         if i.name not in doctor_names:
             doctor_names.append(i.name)
-    for j in departments:
-        doctor_names.append(j.name)
 
     top_doctors_list = Doctor.objects.all().filter(showinhome=True)
     top_departments_list = Department.objects.all().filter(showinhome=True)
@@ -170,21 +168,12 @@ def doctor(request, doctor_id):
  
 
 def search(request, keyword):
-    doctors  = Doctor.objects.all().filter(name=keyword)
-    department = Department.objects.all().filter(name=keyword)
+    try:
+        doctors  = Doctor.objects.get(name=keyword)
 
-    cout_result =   doctors.count() + department.count()
-    if cout_result == 1:
-        if doctors.count()==1:
-            doctors = Doctor.objects.get(name=keyword)
-            context = {'doctor': doctors, 'page_title': doctors.name }
-            return render(request,'doctor.html', context)
-        if department.count() == 1:
-            return HttpResponse('sdfg')
-    else:
-        context = {'doctors': doctors, 'search_key':keyword
-        }
-        return render(request,'searchresult.html', context)
+        return redirect('doctor', doctors.id)
+    except:
+        return redirect('404page')
 
 def test(request):
     test = request.POST.get('test')
